@@ -71,3 +71,12 @@ class Test_AboutUs(Base):
         about_us = AboutUs_Page(driver)
         about_us.about_us_page()
         links.click_navbar_links('About us')
+
+    def test_search_incorrectly1(self):
+        city_name = '!!!'
+        driver = self.driver
+        about_us = AboutUs_Page(driver)
+        search = Utils(driver)
+        about_us.about_us_page()
+        search.searching(city_name)
+        search.assertion(search.city_name_incorrectly(), 'No City Found')
