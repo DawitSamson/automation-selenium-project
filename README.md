@@ -1,6 +1,4 @@
-# Automation Testing
-
-# Project In Selenium
+# Automation Testing 
 
 My First Project In Selenium:
 
