@@ -1,13 +1,15 @@
 import pytest
 from selenium import webdriver
-class Base:
 
+class Base:
     @pytest.fixture(autouse=True)
     def set_up(self):
         print('\n----------------------')
         print('Initialing Chrome Driver')
-        self.driver = webdriver.Chrome(executable_path='C:/Users/yossi/Desktop/Python-Project/SELENIUM_PROJECT/'
-                                                       'automation-selenium-project/Web/Drivers/chromedriver.exe')
+        self.driver = webdriver.Chrome(executable_path='C://Users//yossi//Desktop//Python-Project'
+                                                       '/SELENIUM_PROJECT/automation-selenium-project'
+                                                       '/Web/Drivers/chromedriver.exe')
+
         print('----------------------')
         print('Test is Started')
         print('------------------------')
@@ -17,6 +19,6 @@ class Base:
         yield self.driver
         if self.driver is not None:
             print("\n----------------------------")
-            print("Tests is finished")
+            print("Test is Finished")
             self.driver.close()
             self.driver.quit()

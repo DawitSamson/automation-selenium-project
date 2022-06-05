@@ -37,3 +37,10 @@ class Test_Search:
         assert res_data['success'] == False
         assert res_data['message'] == "no city found"
 
+    def test_load_50_users(self):
+        value = 'Miami'
+        url = Test_Search.URL
+        for i in range(6+1):
+            res = requests.get(url + value)
+            assert res.status_code == 200
+            assert res.elapsed.total_seconds() < 1

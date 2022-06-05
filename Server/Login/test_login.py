@@ -13,6 +13,7 @@ class Test_Login:
         res_data = res.json()
         assert res.status_code == 200
         assert res.elapsed.total_seconds() < 10
+
         assert res_data['success'] == True
         assert res_data['message'] == 'login successful'
 
@@ -49,4 +50,6 @@ class Test_Login:
         assert res.elapsed.total_seconds() < 10
         assert res_data['success'] == False
         assert res_data['message'] == "no user found"
+
+
 

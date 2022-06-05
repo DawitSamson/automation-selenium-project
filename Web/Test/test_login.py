@@ -13,10 +13,13 @@ class Test_Login(Base):
     def test_login_successfully(self):
         driver = self.driver
         login = Login_Page(driver)
+        value = 'Yosef@gmail.com'
         login.login_page()
-        login.enter_email('Yosef@gmail.com')
+        login.enter_email(value)
         login.enter_password('123456')
         login.login_button()
+        driver.get_screenshot_as_png()
+        driver.save_screenshot('02/06/2022.png')
         login.accept_alert()
         driver.refresh()
         driver.implicitly_wait(25)
