@@ -13,17 +13,14 @@ class Test_Login(Base):
     def test_login_successfully(self):
         driver = self.driver
         login = Login_Page(driver)
+        compare = Utils(driver)
         value = 'Yosef@gmail.com'
         login.login_page()
         login.enter_email(value)
         login.enter_password('123456')
         login.login_button()
-        driver.get_screenshot_as_png()
-        driver.save_screenshot('02/06/2022.png')
         login.accept_alert()
-        driver.refresh()
-        driver.implicitly_wait(25)
-        compare = Utils(driver)
+        driver.forward()
         compare.assertion(login.login_validation_message(), 'YOUR INFORMATION')
 
     @allure.description('Login When The Values in The Fields Are Invalid')
@@ -144,5 +141,3 @@ class Test_Login(Base):
                                       "\n26 years old, Natanya\nAvi Admaso\n26 years old, Ashdod"
                                       "\nWho are we?\nTripYoetz\nLearn more\ncopyright © | 2022"
                                       " TripYoetz | all right reserved.")
-
-

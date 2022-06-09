@@ -1,7 +1,7 @@
 import allure
 from Web.Locators.locators_login_page import Locators_Login_Page
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support.wait import WebDriverWait as WAIT
 from selenium.webdriver.support import expected_conditions as EC
 
 class Login_Page:
@@ -38,14 +38,14 @@ class Login_Page:
 
     @allure.step
     def accept_alert(self):
-        wait = WebDriverWait(self.driver, 10)
-        wait.until((EC.alert_is_present()))
+        WAIT(self.driver, 20).until((EC.alert_is_present()))
         alert = self.driver.switch_to.alert
         alert.accept()
 
     # Messages:
     @allure.step
     def login_validation_message(self):
+        WAIT(self.driver, 20).until(EC.visibility_of_all_elements_located((By.XPATH, self.loginValidationMessage)))
         return self.driver.find_element(By.XPATH, self.loginValidationMessage).get_attribute('innerText')
 
     @allure.step

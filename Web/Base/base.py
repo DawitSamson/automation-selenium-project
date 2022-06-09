@@ -11,6 +11,7 @@ class Base:
                                                        '/Web/Drivers/chromedriver.exe')
 
         print('----------------------')
+        print('\n----------------------')
         print('Test is Started')
         print('------------------------')
         self.driver.implicitly_wait(15)
@@ -20,5 +21,6 @@ class Base:
         if self.driver is not None:
             print("\n----------------------------")
             print("Test is Finished")
+            print('------------------------------')
             self.driver.close()
             self.driver.quit()

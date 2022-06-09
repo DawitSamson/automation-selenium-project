@@ -43,4 +43,4 @@ class Test_Search:
         for i in range(6+1):
             res = requests.get(url + value)
             assert res.status_code == 200
-            assert res.elapsed.total_seconds() < 1
+            assert res.elapsed.total_seconds() < 15
