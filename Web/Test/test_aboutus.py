@@ -72,3 +72,12 @@ class Test_AboutUs(Base):
         about_us.about_us_page()
         links.click_navbar_links('About us')
 
+    @allure.description('Accessibility Test')
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_accessibility(self):
+        driver = self.driver
+        about_us = AboutUs_Page(driver)
+        utils = Utils(driver)
+        about_us.about_us_page()
+        driver.implicitly_wait(20)
+        utils.click_colors()

@@ -141,3 +141,14 @@ class Test_Login(Base):
                                       "\n26 years old, Natanya\nAvi Admaso\n26 years old, Ashdod"
                                       "\nWho are we?\nTripYoetz\nLearn more\ncopyright © | 2022"
                                       " TripYoetz | all right reserved.")
+
+    @allure.description('Accessibility Test')
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_accessibility(self):
+        driver = self.driver
+        login = Login_Page(driver)
+        utils = Utils(driver)
+        login.login_page()
+        driver.implicitly_wait(20)
+        utils.click_colors()
+
