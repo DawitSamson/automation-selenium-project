@@ -1,12 +1,14 @@
 import allure
+from selenium.webdriver.chrome.webdriver import WebDriver
 from Web.Locators.locators_login_page import Locators_Login_Page
 from selenium.webdriver.common.by import By
+from Web.Utils.utils import Utils
 from selenium.webdriver.support.wait import WebDriverWait as WAIT
 from selenium.webdriver.support import expected_conditions as EC
 
 class Login_Page:
 
-    def __init__(self, driver):
+    def __init__(self, driver: WebDriver):
         self.driver = driver
         self.emailBox = Locators_Login_Page.EMAIL_FIELD
         self.passwordBox = Locators_Login_Page.PASSWORD_FIELD
@@ -19,18 +21,24 @@ class Login_Page:
     # Pre Condition:
     @allure.step
     def login_page(self):
-        self.driver.get('https://trip-yoetz.herokuapp.com/login')
+        url = 'https://trip-yoetz.herokuapp.com/login'
+        self.driver.get(url)
+        Utils(self.driver).assertion(self.driver.current_url, url)
 
     # Actions:
     @allure.step
     def enter_email(self, email):
-        self.driver.find_element(By.NAME, self.emailBox).clear()
-        self.driver.find_element(By.NAME, self.emailBox).send_keys(email)
+        email_input = self.driver.find_element(By.NAME, self.emailBox)
+        email_input.clear()
+        email_input.send_keys(email)
+        Utils(self.driver).assertion(email_input.get_attribute('value'), email)
 
     @allure.step
     def enter_password(self, password):
-        self.driver.find_element(By.NAME, self.passwordBox).clear()
-        self.driver.find_element(By.NAME, self.passwordBox).send_keys(password)
+        password_input = self.driver.find_element(By.NAME, self.passwordBox)
+        password_input.clear()
+        password_input.send_keys(password)
+        Utils(self.driver).assertion(password_input.get_attribute('value'), password)
 
     @allure.step
     def login_button(self):
