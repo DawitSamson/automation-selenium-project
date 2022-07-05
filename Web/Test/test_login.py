@@ -5,7 +5,7 @@ from Web.Pages.login_page import Login_Page
 from Web.Utils.utils import Utils
 
 @pytest.mark.usefixtures('set_up')
-@pytest.mark.parametrize('browser', ['chrome', 'edge', 'firefox'])
+@pytest.mark.parametrize('browser', ['chrome', 'firefox'])
 class Test_Login(Base):
 
     @allure.description('Login Successfully')
