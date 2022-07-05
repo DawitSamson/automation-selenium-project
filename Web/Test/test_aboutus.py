@@ -5,6 +5,7 @@ from Web.Pages.aboutus_page import AboutUs_Page
 from Web.Base.base import Base
 
 @pytest.mark.usefixtures('set_up')
+@pytest.mark.parametrize('browser', ['chrome', 'edge', 'firefox'])
 class Test_AboutUs(Base):
 
     @allure.description('Verify All The Text In The page ')
