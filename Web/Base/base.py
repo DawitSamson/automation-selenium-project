@@ -7,7 +7,7 @@ class Base:
         if browser == 'chrome':
             print('\n----------------------')
             print('Initialing Chrome Driver')
-            self.driver = webdriver.Chrome()
+            self.driver = webdriver.Chrome('..//Drivers/chromedriver.exe')
             print('----------------------')
             print('\n----------------------')
             print('Test is Started')
@@ -26,7 +26,7 @@ class Base:
         elif browser == 'edge':
             print('\n----------------------')
             print('Initialing Edge Driver')
-            self.driver = webdriver.Edge()
+            self.driver = webdriver.Edge('..//Drivers/msedgedriver.exe')
 
             print('----------------------')
             print('\n----------------------')
@@ -46,7 +46,7 @@ class Base:
         elif browser == 'firefox':
             print('\n----------------------')
             print('Initialing FireFox Driver')
-            self.driver = webdriver.Firefox()
+            self.driver = webdriver.Firefox(executable_path='..//Drivers/geckodriver.exe')
 
             print('----------------------')
             print('\n----------------------')
