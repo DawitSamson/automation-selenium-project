@@ -1,4 +1,5 @@
 import pytest
+from Web.Base import creds
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.firefox.service import Service as FirefoxService
@@ -29,7 +30,7 @@ class Base:
         elif browser == 'firefox':
             print('\n----------------------')
             print('Initialing FireFox Driver')
-            os.environ['GH_TOKEN'] = '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'
+            os.environ['GH_TOKEN'] = creds.token
             self.driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
 
             print('----------------------')
