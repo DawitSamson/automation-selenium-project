@@ -31,7 +31,6 @@ class Base:
             print('Initialing FireFox Driver')
             os.environ['GH_TOKEN'] = ''
             self.driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
-
             print('----------------------')
             print('\n----------------------')
             print('Test is Started')
