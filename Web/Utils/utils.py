@@ -3,12 +3,13 @@ from selenium.webdriver.support import expected_conditions as EC
 from Web.Utils.locatorsUtils import Utils_Locators
 from selenium.webdriver.common.by import By
 import allure
+from selenium.webdriver.chrome.webdriver import WebDriver
 from allure_commons.types import AttachmentType
 from selenium.webdriver.common.keys import Keys
 
 
 class Utils:
-    def __init__(self, driver):
+    def __init__(self, driver: WebDriver):
         self.driver = driver
         self.searchField = Utils_Locators.SEARCH_FIELD  # This is The Search Field
         self.cityName = Utils_Locators.CITY_NAME  # The Text That returns In Correctly Search
@@ -98,8 +99,3 @@ class Utils:
                        'linear-gradient(120deg, rgb(20, 33, 61) 40%, rgb(152, 193, 217) 60%)')
         self.assertion(colors[3].value_of_css_property('background-image'),
                        'linear-gradient(120deg, rgb(0, 0, 0) 40%, rgb(152, 150, 241) 60%)')
-
-
-
-
-

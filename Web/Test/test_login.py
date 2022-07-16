@@ -31,7 +31,6 @@ class Test_Login(Base):
         driver = self.driver
         login = Login_Page(driver)
         login.login_page()
-
         emails = ['Fasil', 'Yosef@', 'Miki@.com', '!!!!']
         passwords = ['5', '10', '100', '', '1115555']
 
@@ -40,34 +39,32 @@ class Test_Login(Base):
                 login.enter_email(emails[i])
                 login.enter_password(passwords[j])
                 login.login_button()
-
-                # Emails Messages:
+                """ All The Email Format Messages In The input """
                 # Message 1:
                 if "חסר '@' " in login.js_email():
-                    assert login.js_email() == f"אני רוצה לכלול '@' בכתובת האימייל. ב-'{emails[i]}' חסר '@'."
-
+                    Utils(driver).assertion(login.js_email(),
+                                            f"אני רוצה לכלול '@' בכתובת האימייל. ב-'{emails[i]}' חסר '@'.")
                 # Message 2:
                 elif "אינו מלא" in login.js_email():
-                    assert login.js_email() == f"יש להזין חלק ואחריו '@'. השדה '{emails[i]}' אינו מלא."
-
+                    Utils(driver).assertion(login.js_email(), f"יש להזין חלק ואחריו '@'. השדה '{emails[i]}' אינו מלא.")
                 # Message 3:
                 elif "שגוי" in login.js_email():
                     invalid_email = emails[i]
                     for letter in range(len(invalid_email)):
                         if invalid_email[letter] == '@':
                             text_for_assertion = invalid_email[letter+1:]
-                            assert login.js_email() == f"נעשה שימוש ב-'.' במיקום שגוי ב-'{text_for_assertion}'."
+                            Utils(driver).assertion(login.js_email(), f"נעשה שימוש "
+                                                                      f"ב-'.' במיקום שגוי ב-'{text_for_assertion}'.")
 
-                # Password Messages:
-
+                """ All The Password Format Messages In the input"""
                 # Message 1:
-                if len(passwords[j]) == 1:
-                    assert login.js_password() == "עליך להאריך את הטקסט ל-4 תווים או יותר (כרגע יש תו אחד)."
-
-                # Message 2:
-                elif len(passwords[j]) in range(2, 4):
-                    assert login.js_password() == f"צריך להאריך את הטקסט הזה" \
-                                   f" ל-4 תווים או יותר (כרגע הוא באורך {len(passwords[j])} תווים)."
+                if len(passwords[j]) in range(2, 4):
+                    Utils(driver).assertion(login.js_password(), f'Please lengthen this text to 4 characters '
+                                                                 f'or more (you are currently '
+                                                                 f'using {len(passwords[j])} characters).')
+                elif len(passwords[j]) == 1:
+                    Utils(driver).assertion(login.js_password(), 'Please lengthen this text to 4 characters or more'
+                                                                 ' (you are currently using 1 character).')
 
     @allure.description('Login Incorrectly When The Email is Correct and The Password is Incorrect')
     @allure.severity(allure.severity_level.CRITICAL)
@@ -152,4 +149,3 @@ class Test_Login(Base):
         login.login_page()
         driver.implicitly_wait(20)
         utils.click_colors()
-

@@ -28,8 +28,8 @@ class Base:
 
         elif browser == 'firefox':
             print('\n----------------------')
-            print('Initialing FireFox Driver')
             os.environ['GH_TOKEN'] = ''
+            print('Initialing FireFox Driver')
             self.driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
             print('----------------------')
             print('\n----------------------')
@@ -45,3 +45,6 @@ class Base:
                 print('------------------------------')
                 self.driver.close()
                 self.driver.quit()
+
+        else:
+            raise ValueError('Please insert valid Driver.')
