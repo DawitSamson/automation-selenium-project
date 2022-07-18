@@ -8,21 +8,21 @@ from Web.Utils.utils import Utils
 @pytest.mark.parametrize('browser', ['chrome', 'firefox'])
 class Test_Login(Base):
 
+    @pytest.fixture(autouse=True)
     @allure.description('Login Successfully, This is The PreCondition for User Profile Tests')
     @allure.severity(allure.severity_level.CRITICAL)
     @pytest.mark.sanity
-    @pytest.fixture(autouse=True)
     def test_login_successfully(self):
         driver = self.driver
         login = Login_Page(driver)
         compare = Utils(driver)
-        value = 'Yosef@gmail.com'
         login.login_page()
-        login.enter_email(value)
+        login.enter_email('Yosef@gmail.com')
         login.enter_password('123456')
         login.login_button()
         login.accept_alert()
         driver.forward()
+        login.click_profile_link()
         compare.assertion(login.login_validation_message(), 'YOUR INFORMATION')
 
     @allure.description('Login When The Values in The Fields Are Invalid')

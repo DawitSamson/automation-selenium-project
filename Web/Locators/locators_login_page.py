@@ -5,7 +5,7 @@ class Locators_Login_Page:
 
     # XPath:
     LOGIN_BUTTON = '//form[1]/button[1]'  # Login Button
-
+    PROFILE_BUTTON = 'a[class="sc-gsDKAQ cOqGzW"]'
     LOGIN_VALIDATION_MESSAGE = "//h1[contains(text(),'YOUR INFORMATION')]"  # Successfully Login:
     ERROR_MESSAGE1 = "//h2[contains(text(),'password or email incorrect')]"  # When Email is Correct
     ERROR_MESSAGE2 = "//h2[contains(text(),'no user found')]"  # When Email is InCorrect

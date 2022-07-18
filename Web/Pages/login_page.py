@@ -13,6 +13,7 @@ class Login_Page:
         self.emailBox = Locators_Login_Page.EMAIL_FIELD
         self.passwordBox = Locators_Login_Page.PASSWORD_FIELD
         self.loginButton = Locators_Login_Page.LOGIN_BUTTON
+        self.profileLink = Locators_Login_Page.PROFILE_BUTTON
         self.loginValidationMessage = Locators_Login_Page.LOGIN_VALIDATION_MESSAGE
         self.email_Password_error = Locators_Login_Page.ERROR_MESSAGE1
         self.userError = Locators_Login_Page.ERROR_MESSAGE2
@@ -24,6 +25,12 @@ class Login_Page:
         url = 'https://trip-yoetz.herokuapp.com/login'
         self.driver.get(url)
         Utils(self.driver).assertion(self.driver.current_url, url)
+
+    @allure.step
+    def click_profile_link(self):
+        self.driver.find_element(By.CSS_SELECTOR, self.profileLink).click()
+        WAIT(self.driver, 20).until(EC.url_to_be('https://trip-yoetz.herokuapp.com/profile'))
+        Utils(self.driver).assertion(self.driver.current_url, 'https://trip-yoetz.herokuapp.com/profile')
 
     # Actions:
     @allure.step
