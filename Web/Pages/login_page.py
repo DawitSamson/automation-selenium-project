@@ -25,6 +25,7 @@ class Login_Page:
         url = 'https://trip-yoetz.herokuapp.com/login'
         self.driver.get(url)
         Utils(self.driver).assertion(self.driver.current_url, url)
+        self.driver.implicitly_wait(20)
 
     @allure.step
     def click_profile_link(self):
@@ -56,6 +57,7 @@ class Login_Page:
         WAIT(self.driver, 20).until((EC.alert_is_present()))
         alert = self.driver.switch_to.alert
         alert.accept()
+        self.driver.forward()
 
     # Messages:
     @allure.step
