@@ -3,12 +3,13 @@ import pytest
 from Web.Utils.utils import Utils
 from Web.Pages.aboutus_page import AboutUs_Page
 from Web.Base.base import Base
+from Web.coftest import Fixtures
 
 @pytest.mark.usefixtures('set_up')
 @pytest.mark.parametrize('browser', ['chrome', 'firefox'])
-class Test_AboutUs(Base):
+class Test_AboutUs(Fixtures, Base):
 
-    @allure.description('Verify All The Text In The page ')
+    @allure.description('Verify All The User Interface In The page ')
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.regression
     def test_ui(self):
@@ -49,7 +50,7 @@ class Test_AboutUs(Base):
         search = Utils(driver)
         about_us.about_us_page()
         search.searching(city_name)
-        search.assertion(search.city_name_correctly(), f'Discover {city_name}')
+        search.assertion(f'Discover {city_name}', search.city_name_correctly())
 
     @allure.description('Searching Incorrectly')
     @pytest.mark.sanity

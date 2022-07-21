@@ -3,25 +3,18 @@ import pytest
 from Web.Base.base import Base
 from Web.Pages.login_page import Login_Page
 from Web.Utils.utils import Utils
+from Web.coftest import Fixtures
 
 @pytest.mark.usefixtures('set_up')
 @pytest.mark.parametrize('browser', ['chrome', 'firefox'])
-class Test_Login(Base):
+class Test_Login(Fixtures, Base):
 
     @allure.description('Login Successfully, This is The PreCondition for User Profile Tests')
     @allure.severity(allure.severity_level.CRITICAL)
     @pytest.mark.sanity
-    def test_login_successfully(self):
-        driver = self.driver
-        login = Login_Page(driver)
-        login.login_page()
-        login.enter_email('Yosef@gmail.com')
-        login.enter_password('123456')
-        login.login_button()
-        login.accept_alert()
-        driver.forward()
-        login.click_profile_link()
-        Utils(driver).assertion('YOUR INFORMATION', login.login_validation_message())
+    @pytest.mark.usefixtures('login_successfully')
+    def test_or_login(self):
+        pass
 
     @allure.description('Login When The Values in The Fields Are Invalid')
     @pytest.mark.regression
@@ -148,3 +141,4 @@ class Test_Login(Base):
         login.login_page()
         driver.implicitly_wait(20)
         utils.click_colors()
+
