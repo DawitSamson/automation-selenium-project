@@ -13,7 +13,7 @@ class Test_Login(Fixtures, Base):
     @allure.severity(allure.severity_level.CRITICAL)
     @pytest.mark.sanity
     @pytest.mark.usefixtures('login_successfully')
-    def test_or_login(self):
+    def test_login_successfully(self):
         pass
 
     @allure.description('Login When The Values in The Fields Are Invalid')
