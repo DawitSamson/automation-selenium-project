@@ -40,12 +40,12 @@ class Utils:
         searching.send_keys(Keys.ENTER)
 
     @allure.step
-    @allure.description('Validation - Message when search is correctly')
+    @allure.description('Validation - message when search is correctly')
     def city_name_correctly(self):
         return self.driver.find_element(By.XPATH, self.cityName).get_attribute('innerText')
 
     @allure.step
-    @allure.description('Validation - Message when search is incorrectly')
+    @allure.description('Validation - message when search is incorrectly')
     def city_name_incorrectly(self):
         return self.driver.find_element(By.XPATH, self.errorCityName).get_attribute('innerText')
 
@@ -82,12 +82,12 @@ class Utils:
             driver.back()
 
     @allure.step
-    @allure.description('the button that open the ruler with all the colors')
+    @allure.description('The button that open the ruler with all the colors')
     def click_accessibility_button(self):
         self.driver.find_element(By.CSS_SELECTOR, self.accessibilityButton).click()
 
     @allure.step
-    @allure.description('getting the list with all the colors and start clicking them')
+    @allure.description('Getting the list with all the colors and start clicking them')
     def click_colors(self):
         wait = WebDriverWait(self.driver, 20)
         colors = self.driver.find_elements(By.XPATH, self.accessibilityColors)

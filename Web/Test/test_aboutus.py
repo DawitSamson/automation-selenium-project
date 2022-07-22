@@ -9,7 +9,7 @@ from Web.coftest import Fixtures
 @pytest.mark.parametrize('browser', ['chrome', 'firefox'])
 class Test_AboutUs(Fixtures, Base):
 
-    @allure.description('Verify All The User Interface In The page ')
+    @allure.description('Verify all the user interface in the page ')
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.regression
     def test_ui(self):
@@ -38,7 +38,7 @@ class Test_AboutUs(Fixtures, Base):
                                          " old, Ashdod\nWho are we?\nTripYoetz\nLearn more\ncopyright © "
                                          "| 2022 TripYoetz | all right reserved.", about_us.ui())
 
-    @allure.description('Searching Correctly')
+    @allure.description('Searching correctly')
     @pytest.mark.sanity
     @allure.severity(allure.severity_level.CRITICAL)
     def test_search_correctly(self):
@@ -50,7 +50,7 @@ class Test_AboutUs(Fixtures, Base):
         search.searching(city_name)
         search.assertion(f'Discover {city_name}', search.city_name_correctly())
 
-    @allure.description('Searching Incorrectly')
+    @allure.description('Searching incorrectly')
     @pytest.mark.sanity
     @allure.severity(allure.severity_level.CRITICAL)
     def test_search_incorrectly(self):
@@ -62,7 +62,7 @@ class Test_AboutUs(Fixtures, Base):
         search.searching(city_name)
         search.assertion('No City Found', search.city_name_incorrectly())
 
-    @allure.description('Navigate From About Us Page To All The Pages In The Website')
+    @allure.description('Navigate from about-us page to all the pages in the website')
     @pytest.mark.sanity
     @allure.severity(allure.severity_level.CRITICAL)
     def test_navbar_links(self):
@@ -72,7 +72,7 @@ class Test_AboutUs(Fixtures, Base):
         about_us.about_us_page()
         links.click_navbar_links('About us')
 
-    @allure.description('Accessibility Test')
+    @allure.description('Accessibility test')
     @allure.severity(allure.severity_level.NORMAL)
     def test_accessibility(self):
         driver = self.driver
