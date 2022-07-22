@@ -15,10 +15,8 @@ class Test_AboutUs(Fixtures, Base):
     def test_ui(self):
         driver = self.driver
         about_us = AboutUs_Page(driver)
-        compare = Utils(driver)
         about_us.about_us_page()
-        about_us.ui()
-        compare.assertion(about_us.ui(), "Login\nRegister\nAbout us\nTripYoetz\nwelcome to tripYoetz"
+        Utils(driver).assertion("Login\nRegister\nAbout us\nTripYoetz\nwelcome to tripYoetz"
                                          "\nAbout Us\nTripYoetz, the world's largest travel guidance platform"
                                          ", helps hundreds of millions of people each month become better "
                                          "travelers, from planning to booking to taking a trip. Travelers"
@@ -38,7 +36,7 @@ class Test_AboutUs(Fixtures, Base):
                                          "\nFollow the links below for more info\nMarcos Bazbih\n24 years old,"
                                          " Ashdod\nTikva Yosef\n26 years old, Natanya\nAvi Admaso\n26 years"
                                          " old, Ashdod\nWho are we?\nTripYoetz\nLearn more\ncopyright © "
-                                         "| 2022 TripYoetz | all right reserved.")
+                                         "| 2022 TripYoetz | all right reserved.", about_us.ui())
 
     @allure.description('Searching Correctly')
     @pytest.mark.sanity
@@ -62,7 +60,7 @@ class Test_AboutUs(Fixtures, Base):
         search = Utils(driver)
         about_us.about_us_page()
         search.searching(city_name)
-        search.assertion(search.city_name_incorrectly(), 'No City Found')
+        search.assertion('No City Found', search.city_name_incorrectly())
 
     @allure.description('Navigate From About Us Page To All The Pages In The Website')
     @pytest.mark.sanity

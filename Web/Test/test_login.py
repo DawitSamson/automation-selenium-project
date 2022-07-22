@@ -9,14 +9,14 @@ from Web.coftest import Fixtures
 @pytest.mark.parametrize('browser', ['chrome', 'firefox'])
 class Test_Login(Fixtures, Base):
 
-    @allure.description('Login Successfully, This is The PreCondition for User Profile Tests')
+    @allure.description('Login successfully, this is the PreCondition for user profile tests')
     @allure.severity(allure.severity_level.CRITICAL)
     @pytest.mark.sanity
     @pytest.mark.usefixtures('login_successfully')
     def test_login_successfully(self):
         pass
 
-    @allure.description('Login When The Values in The Fields Are Invalid')
+    @allure.description('Login when the values in the fields are invalid')
     @pytest.mark.regression
     @allure.severity(allure.severity_level.NORMAL)
     def test_login_invalid_fields_all_the_options(self):
@@ -58,31 +58,29 @@ class Test_Login(Fixtures, Base):
                     Utils(driver).assertion(login.js_password(), 'Please lengthen this text to 4 characters or more'
                                                                  ' (you are currently using 1 character).')
 
-    @allure.description('Login Incorrectly When The Email is Correct and The Password is Incorrect')
+    @allure.description('Login incorrectly when the email is correct and the password is incorrect')
     @allure.severity(allure.severity_level.CRITICAL)
     def test_login_user_exist_and_incorrect_password(self):
         driver = self.driver
         login = Login_Page(driver)
-        compare = Utils(driver)
         login.login_page()
         login.enter_email('Yosef@gmail.com')
         login.enter_password('walla-com')
         login.login_button()
-        compare.assertion(login.email_or_password_error(), 'password or email incorrect')
+        Utils(driver).assertion('password or email incorrect', login.email_or_password_error())
 
-    @allure.description('Login Incorrectly When The Email is Incorrect and The Password is Incorrect')
+    @allure.description('Login incorrectly when the email is incorrect and the password is incorrect')
     @allure.severity(allure.severity_level.CRITICAL)
     def test_login_user_not_exist_and_incorrect_password(self):
         driver = self.driver
         login = Login_Page(driver)
-        compare = Utils(driver)
         login.login_page()
         login.enter_email('Yossss@gmail.com')
         login.enter_password('walla-com')
         login.login_button()
-        compare.assertion(login.no_user_error_message(), 'no user found')
+        Utils(driver).assertion('no user found', login.no_user_error_message())
 
-    @allure.description('Searching Correctly')
+    @allure.description('Searching correctly')
     @allure.severity(allure.severity_level.CRITICAL)
     @pytest.mark.sanity
     def test_search_correctly(self):
@@ -92,9 +90,9 @@ class Test_Login(Fixtures, Base):
         login.login_page()
         search = Utils(driver)
         search.searching(city)
-        search.assertion(search.city_name_correctly(), f'Discover {city}')
+        search.assertion(f'Discover {city}', search.city_name_correctly())
 
-    @allure.description('Searching Incorrectly')
+    @allure.description('Searching incorrectly')
     @allure.severity(allure.severity_level.CRITICAL)
     @pytest.mark.sanity
     def test_search_incorrectly(self):
@@ -104,9 +102,9 @@ class Test_Login(Fixtures, Base):
         login.login_page()
         search = Utils(driver)
         search.searching(city)
-        search.assertion(search.city_name_incorrectly(), 'No City Found')
+        search.assertion('No City Found', search.city_name_incorrectly())
 
-    @allure.description('Navigate From Login Page To All The Pages In The Website')
+    @allure.description('Navigate from login page to all the pages in the website')
     @allure.severity(allure.severity_level.CRITICAL)
     @pytest.mark.sanity
     def test_nav_bar_links(self):
@@ -116,23 +114,21 @@ class Test_Login(Fixtures, Base):
         x = Utils(driver)
         x.click_navbar_links('Login')
 
-    @allure.description('Verify All The Text In The page')
+    @allure.description('Verify all the text in the page')
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.regression
     def test_ui(self):
         driver = self.driver
         login = Login_Page(driver)
         login.login_page()
-        login.ui()
-        compare = Utils(driver)
-        compare.assertion(login.ui(), "Login\nRegister\nAbout us\nTripYoetz\nNew here ?\nTo"
+        Utils(driver).assertion("Login\nRegister\nAbout us\nTripYoetz\nNew here ?\nTo"
                                       " register please click the link below\nRegister\nLogin\n"
                                       "LOGIN\nMarcos Bazbih\n24 years old, Ashdod\nTikva Yosef"
                                       "\n26 years old, Natanya\nAvi Admaso\n26 years old, Ashdod"
                                       "\nWho are we?\nTripYoetz\nLearn more\ncopyright © | 2022"
-                                      " TripYoetz | all right reserved.")
+                                      " TripYoetz | all right reserved.", login.ui())
 
-    @allure.description('Accessibility Test')
+    @allure.description('Accessibility test')
     @allure.severity(allure.severity_level.NORMAL)
     def test_accessibility(self):
         driver = self.driver
@@ -141,4 +137,20 @@ class Test_Login(Fixtures, Base):
         login.login_page()
         driver.implicitly_wait(20)
         utils.click_colors()
+
+    @allure.description('Login successfully with clicking on show password button')
+    @allure.severity(allure.severity_level.NORMAL)
+    @pytest.mark.xfail(reason='Attribute(type) of password not change to text')
+    def test_login_successfully_(self):
+        driver = self.driver
+        login = Login_Page(driver)
+        login.login_page()
+        login.enter_email('Yosef@gmail.com')
+        login.enter_password('123456')
+        login.click_show_password_button()
+        login.login_button()
+        login.accept_alert()
+        driver.forward()
+        login.click_profile_link()
+        Utils(driver).assertion('YOUR INFORMATION', login.login_validation_message())
 

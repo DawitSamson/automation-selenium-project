@@ -21,6 +21,7 @@ class Utils:
         self.accessibilityColors = Utils_Locators.ACCESSIBILITY_COLORS  # List with 4 Values (Colors)
 
     @allure.step
+    @allure.description('This validation method, if the assert failed screenshot is taken')
     def assertion(self, expected, actual):
         driver = self.driver
         try:
@@ -31,28 +32,35 @@ class Utils:
             raise AssertionError
 
     @allure.step
+    @allure.description('The search method that included valid and invalid search')
     def searching(self, city_name):
         searching = self.driver.find_element(By.CLASS_NAME, self.searchField)
         searching.send_keys(city_name)
+        self.assertion(city_name, searching.get_attribute('value'))
         searching.send_keys(Keys.ENTER)
 
     @allure.step
+    @allure.description('Validation - Message when search is correctly')
     def city_name_correctly(self):
         return self.driver.find_element(By.XPATH, self.cityName).get_attribute('innerText')
 
     @allure.step
+    @allure.description('Validation - Message when search is incorrectly')
     def city_name_incorrectly(self):
         return self.driver.find_element(By.XPATH, self.errorCityName).get_attribute('innerText')
 
     @allure.step
+    @allure.description('Return all the list with links on navbar')
     def navbar_links_list(self):
-        return self.driver.find_elements(By.XPATH, self.navBarLinks)
+        links = self.driver.find_elements(By.XPATH, self.navBarLinks)
+        self.assertion(4, len(links))
+        return links
 
     @allure.step
+    @allure.description('Clicking on all the links in the navbar without the current page')
     def click_navbar_links(self, page_name):
         driver = self.driver
-        compare = Utils(driver)
-        nav_bar_links = compare.navbar_links_list()
+        nav_bar_links = self.navbar_links_list()
 
         for link in range(len(nav_bar_links)):
             if nav_bar_links[link].text == page_name:
@@ -60,24 +68,26 @@ class Utils:
             nav_bar_links[link].click()
 
             if 'Re' in nav_bar_links[link].text:
-                compare.assertion(nav_bar_links[link].text, 'Register')
+                self.assertion('Register', nav_bar_links[link].text)
 
             elif 'Ab' in nav_bar_links[link].text:
-                compare.assertion(nav_bar_links[link].text, 'About us')
+                self.assertion('About us', nav_bar_links[link].text)
 
             elif 'Tr' in nav_bar_links[link].text:
-                compare.assertion(nav_bar_links[link].text, 'TripYoetz')
+                self.assertion('TripYoetz', nav_bar_links[link].text)
 
             elif 'Log' in nav_bar_links[link].text:
-                compare.assertion(nav_bar_links[link].text, 'Login')
+                self.assertion('Login', nav_bar_links[link].text)
 
             driver.back()
 
     @allure.step
+    @allure.description('the button that open the ruler with all the colors')
     def click_accessibility_button(self):
         self.driver.find_element(By.CSS_SELECTOR, self.accessibilityButton).click()
 
     @allure.step
+    @allure.description('getting the list with all the colors and start clicking them')
     def click_colors(self):
         wait = WebDriverWait(self.driver, 20)
         colors = self.driver.find_elements(By.XPATH, self.accessibilityColors)
