@@ -1,5 +1,6 @@
 import allure
 import pytest
+from Web.Pages.accessibility_page import Accessibility_Page
 from Web.Base.base import Base
 from Web.Pages.login_page import Login_Page
 from Web.Utils.utils import Utils
@@ -129,15 +130,31 @@ class Test_Login(Fixtures, Base):
                                       "\nWho are we?\nTripYoetz\nLearn more\ncopyright © | 2022"
                                       " TripYoetz | all right reserved.", login.ui())
 
-    @allure.description('Accessibility test')
+    @allure.description('Accessibility test on login page clicking one color after the other')
     @allure.severity(allure.severity_level.NORMAL)
-    def test_accessibility(self):
+    def test_accessibility1(self):
         driver = self.driver
         login = Login_Page(driver)
-        utils = Utils(driver)
+        accessibility = Accessibility_Page(driver)
         login.login_page()
-        driver.implicitly_wait(20)
-        utils.click_colors()
+        accessibility.clicking_color(2)
+        accessibility.clicking_color(3)
+        accessibility.clicking_color(4)
+        accessibility.clicking_color(1)
+
+    @allure.description('Accessibility test on login page clicking on color and return to default color')
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_accessibility2(self):
+        driver = self.driver
+        login = Login_Page(driver)
+        accessibility = Accessibility_Page(driver)
+        login.login_page()
+        accessibility.clicking_color(2)
+        accessibility.clicking_color(1)
+        accessibility.clicking_color(3)
+        accessibility.clicking_color(1)
+        accessibility.clicking_color(4)
+        accessibility.clicking_color(1)
 
     @allure.description('Login successfully with clicking on show password button')
     @allure.severity(allure.severity_level.NORMAL)
@@ -154,4 +171,3 @@ class Test_Login(Fixtures, Base):
         driver.forward()
         login.click_profile_link()
         Utils(driver).assertion('YOUR INFORMATION', login.login_validation_message())
-

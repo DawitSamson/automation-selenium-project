@@ -4,6 +4,7 @@ from Web.Utils.utils import Utils
 from Web.Pages.aboutus_page import AboutUs_Page
 from Web.Base.base import Base
 from Web.coftest import Fixtures
+from Web.Pages.accessibility_page import Accessibility_Page
 
 @pytest.mark.usefixtures('set_up')
 @pytest.mark.parametrize('browser', ['chrome', 'firefox'])
@@ -72,12 +73,29 @@ class Test_AboutUs(Fixtures, Base):
         about_us.about_us_page()
         links.click_navbar_links('About us')
 
-    @allure.description('Accessibility test')
+    @allure.description('Accessibility test on about-us page clicking one color after the other')
     @allure.severity(allure.severity_level.NORMAL)
-    def test_accessibility(self):
+    def test_accessibility1(self):
         driver = self.driver
-        about_us = AboutUs_Page(driver)
-        utils = Utils(driver)
-        about_us.about_us_page()
-        driver.implicitly_wait(20)
-        utils.click_colors()
+        about = AboutUs_Page(driver)
+        accessibility = Accessibility_Page(driver)
+        about.about_us_page()
+        accessibility.clicking_color(2)
+        accessibility.clicking_color(3)
+        accessibility.clicking_color(4)
+        accessibility.clicking_color(1)
+
+    @allure.description('Accessibility test on about-us page clicking on color and return to default color')
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_accessibility2(self):
+        driver = self.driver
+        about = AboutUs_Page(driver)
+        accessibility = Accessibility_Page(driver)
+        about.about_us_page()
+        accessibility.clicking_color(2)
+        accessibility.clicking_color(1)
+        accessibility.clicking_color(3)
+        accessibility.clicking_color(1)
+        accessibility.clicking_color(4)
+        accessibility.clicking_color(1)
+
