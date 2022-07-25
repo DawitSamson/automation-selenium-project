@@ -98,4 +98,3 @@ class Test_AboutUs(Fixtures, Base):
         accessibility.clicking_color(1)
         accessibility.clicking_color(4)
         accessibility.clicking_color(1)
-

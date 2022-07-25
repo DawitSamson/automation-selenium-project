@@ -3,12 +3,13 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 from Web.Locators.locators_login_page import Locators_Login_Page
 from selenium.webdriver.common.by import By
 from Web.Utils.utils import Utils
-from selenium.webdriver.support.wait import WebDriverWait as WAIT
+from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 class Login_Page:
     def __init__(self, driver: WebDriver):
         self.driver = driver
+        self.wait = WebDriverWait(self.driver, 30)
         self.emailBox = Locators_Login_Page.EMAIL_FIELD
         self.passwordBox = Locators_Login_Page.PASSWORD_FIELD
         self.loginButton = Locators_Login_Page.LOGIN_BUTTON
@@ -31,8 +32,8 @@ class Login_Page:
     @allure.description('Navigate to user profile after successfully login')
     def click_profile_link(self):
         self.driver.find_element(By.CSS_SELECTOR, self.profileLink).click()
-        WAIT(self.driver, 20).until(EC.url_to_be('https://trip-yoetz.herokuapp.com/profile'))
-        Utils(self.driver).assertion( 'https://trip-yoetz.herokuapp.com/profile', self.driver.current_url)
+        self.wait.until(EC.url_to_be('https://trip-yoetz.herokuapp.com/profile'))
+        Utils(self.driver).assertion('https://trip-yoetz.herokuapp.com/profile', self.driver.current_url)
 
     @allure.step
     @allure.description('Show password button - should display text in password input')
@@ -66,7 +67,7 @@ class Login_Page:
     @allure.step
     @allure.description('Alert after login successfully')
     def accept_alert(self):
-        WAIT(self.driver, 20).until((EC.alert_is_present()))
+        self.wait.until((EC.alert_is_present()))
         alert = self.driver.switch_to.alert
         alert.accept()
         self.driver.forward()
@@ -74,7 +75,7 @@ class Login_Page:
     @allure.step
     @allure.description('Validation - the message from user profile page after successfully login')
     def login_validation_message(self):
-        WAIT(self.driver, 20).until(EC.visibility_of_all_elements_located((By.XPATH, self.loginValidationMessage)))
+        self.wait.until(EC.visibility_of_all_elements_located((By.XPATH, self.loginValidationMessage)))
         return self.driver.find_element(By.XPATH, self.loginValidationMessage).get_attribute('innerText')
 
     @allure.step

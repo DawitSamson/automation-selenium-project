@@ -17,3 +17,13 @@ I add Sanity and Regression builds, when there is change in the project this bui
 Authors:
 Yosef Alemayo
 
+# comments:
+- add whoAreWe section
+- loads and performance tests
+- GH TOKEN for firefox driver
+- change invalid option test in login 
+- add user profile tests
+- verify all the tests run on jenkins
+- sanity and regression will execute automatically when there is change in the project 
+- mobile 
+- pom at server folder
