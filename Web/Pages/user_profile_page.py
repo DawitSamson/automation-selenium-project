@@ -42,7 +42,7 @@ class User_Profile_Page:
         Utils(self.driver).assertion(last_name, last_name_input.get_attribute('value'))
 
     @allure.step
-    @allure.description('Insert last name value to the last name input')
+    @allure.description('Insert email value to the email input')
     def enter_email(self, email: str):
         email_input = self.driver.find_element(By.CSS_SELECTOR, self.emailInput)
         email_input.clear()
@@ -50,15 +50,16 @@ class User_Profile_Page:
         Utils(self.driver).assertion(email, email_input.get_attribute('value'))
 
     @allure.step
-    @allure.description('Insert last name value to the last name input')
+    @allure.description('Insert image value to the image input')
     def enter_image_name(self, image: str):
         image_input = self.driver.find_element(By.CSS_SELECTOR, self.imageInput)
         image_input.clear()
         image_input.send_keys(image)
         Utils(self.driver).assertion(image, image_input.get_attribute('value'))
 
-    ''' Problam'''
-    def enter_date(self, date):
-        date_input = self.driver.find_element(By.CSS_SELECTOR, self.birthDateInput)
-        date_input.clear()
-        date_input.send_keys(date)
+    @allure.step
+    @allure.description('Insert birth date value to the birth date input, using in execute_script')
+    def enter_date(self, date: str):
+        birth_date_input = self.driver.find_element(By.CSS_SELECTOR, self.birthDateInput)
+        self.driver.execute_script(f"document.getElementsByName('birthDate')[0].value = '{date}'")
+        Utils(self.driver).assertion(date, birth_date_input.get_attribute('value'))
