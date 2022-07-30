@@ -1,3 +1,5 @@
+import time
+
 import allure
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
@@ -10,14 +12,19 @@ class User_Profile_Page:
     def __init__(self, driver: WebDriver):
         self.driver = driver
         self.wait = WebDriverWait(self.driver, 20)
+
         self.editButton = User_Profile_Locators.EDIT_PROFILE_BUTTON
         self.validationForEditButton = User_Profile_Locators.VALIDATION_FOR_EDIT_BUTTON
+
         self.firstNameInput = User_Profile_Locators.NAME_INPUT
         self.lastNameInput = User_Profile_Locators.LAST_NAME_INPUT
         self.emailInput = User_Profile_Locators.EMAIL_INPUT
         self.birthDateInput = User_Profile_Locators.BIRTH_DATE_INPUT
         self.imageInput = User_Profile_Locators.IMAGE_INPUT
+        self.updateButton = User_Profile_Locators.UPDATE_BUTTON
+
         self.logOutButton = User_Profile_Locators.LOG_OUT_BUTTON
+        self.validationForLogOutButton = User_Profile_Locators.VALIDATION_FOR_LOG_BUTTON
 
     @allure.step
     @allure.description('Click on edit button Open the edit profile window')
@@ -63,3 +70,18 @@ class User_Profile_Page:
         birth_date_input = self.driver.find_element(By.CSS_SELECTOR, self.birthDateInput)
         self.driver.execute_script(f"document.getElementsByName('birthDate')[0].value = '{date}'")
         Utils(self.driver).assertion(date, birth_date_input.get_attribute('value'))
+
+    @allure.step
+    @allure.description('Click on log out button and exit from account')
+    def click_on_log_out_button(self):
+        self.driver.find_element(By.CSS_SELECTOR, self.logOutButton).click()
+        alert = self.driver.switch_to.alert
+        for i in range(2):
+            alert.accept()
+        self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, self.validationForLogOutButton)))
+
+    @allure.step
+    @allure.description('Click on update button after sending values to the inputs')
+    def click_on_update_button(self):
+        self.driver.find_element(By.XPATH, self.updateButton).click()
+
