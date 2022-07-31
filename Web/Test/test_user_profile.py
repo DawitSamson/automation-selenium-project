@@ -50,3 +50,8 @@ class Test_User_Profile(Fixtures):
         search = Utils(driver)
         search.searching(city_name)
         search.assertion('No City Found', search.city_name_incorrectly())
+
+    def test_update_details(self):
+        driver = self.driver
+        user = User_Profile_Page(driver)
+        pass
