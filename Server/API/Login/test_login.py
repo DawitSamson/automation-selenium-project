@@ -1,55 +1,63 @@
+from Server.API.constants import LoginConstants
 import allure
 import requests
 
 class Test_Login:
-    URL = 'https://trip-yoetz.herokuapp.com/auth/login'
-
-    @allure.description('Login Correctly')
+    @allure.description('Login correctly')
     def test_login_correctly(self):
-        url = Test_Login.URL
-        data = {"email": "Yosef@gmail.com",
-                "password": "123456"}
+        url = LoginConstants.url_login
+        data = LoginConstants.data_valid
         res = requests.post(url, json=data)
         res_data = res.json()
         assert res.status_code == 200
         assert res.elapsed.total_seconds() < 10
+        assert res_data[LoginConstants.success_key] == True
+        assert res_data[LoginConstants.message_key] == 'login successful'
 
-        assert res_data['success'] == True
-        assert res_data['message'] == 'login successful'
-
-    @allure.description('Login When Password Incorrectly')
+    @allure.description('Login when password incorrectly')
     def test_login_with_incorrectly_password(self):
-        url = Test_Login.URL
-        data = {"email": "Yosef@gmail.com",
-                "password": "6116161616"}
+        url = LoginConstants.url_login
+        data = LoginConstants.data_invalid_password
         res = requests.post(url, json=data)
         res_data = res.json()
         assert res.status_code == 400
         assert res.elapsed.total_seconds() < 10
-        assert res_data['success'] == False
-        assert res_data['message'] == "password or email incorrect"
+        assert res_data[LoginConstants.success_key] == False
+        assert res_data[LoginConstants.message_key] == "password or email incorrect"
 
-    @allure.description('Login When Email Incorrectly')
+    @allure.description('Login when email incorrectly')
     def test_login_with_incorrectly_email(self):
-        url = Test_Login.URL
-        data = {"email": "m@fg", "password": "123456"}
+        url = LoginConstants.url_login
+        data = LoginConstants.data_invalid_email
         res = requests.post(url, json=data)
         res_data = res.json()
         assert res.status_code == 400
         assert res.elapsed.total_seconds() < 10
-        assert res_data['success'] == False
-        assert res_data['message'] == "no user found"
+        assert res_data[LoginConstants.success_key] == False
+        assert res_data[LoginConstants.message_key] == "no user found"
 
-    @allure.description('Login When Email & Password Incorrectly')
+    @allure.description('Login when email & password incorrectly')
     def test_login_with_incorrectly_email_and_password(self):
-        url = Test_Login.URL
-        data = {"email": "Yo@s", "password": "1526"}
+        url = LoginConstants.url_login
+        data = LoginConstants.data_invalid_password_and_email
         res = requests.post(url, json=data)
         res_data = res.json()
         assert res.status_code == 400
         assert res.elapsed.total_seconds() < 10
-        assert res_data['success'] == False
-        assert res_data['message'] == "no user found"
+        assert res_data[LoginConstants.success_key] == False
+        assert res_data[LoginConstants.message_key] == "no user found"
+
+    @allure.description('Login when email & password are null')
+    def test_login_with_null_email_and_password(self):
+        url = LoginConstants.url_login
+        data = {}
+        res = requests.post(url, data=data)
+        res_data = res.json()
+        assert res.status_code == 400
+        assert res.elapsed.total_seconds() < 10
+        assert res_data[LoginConstants.success_key] == False
+        assert res_data[LoginConstants.message_key] == 'no user found'
+
 
 
 
