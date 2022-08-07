@@ -1,6 +1,6 @@
 import allure
 import requests
-from Server.API.constants import RestaurantsConstants
+from Server.API.Constants.restaurants_constants import RestaurantsConstants
 
 class Test_Restaurants:
 

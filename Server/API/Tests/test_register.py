@@ -1,6 +1,6 @@
 import requests
 import allure
-from Server.API.constants import RegisterConstants
+from Server.API.Constants.register_constants import RegisterConstants
 
 class Test_Register:
     @allure.description('User registered correctly')

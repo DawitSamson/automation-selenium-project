@@ -1,4 +1,4 @@
-from Server.API.constants import SearchConstants
+from Server.API.Constants.serach_constants import SearchConstants
 import requests
 import allure
 

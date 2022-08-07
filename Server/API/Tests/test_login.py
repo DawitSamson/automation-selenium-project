@@ -1,4 +1,4 @@
-from Server.API.constants import LoginConstants
+from Server.API.Constants.login_constants import LoginConstants
 import allure
 import requests
 
