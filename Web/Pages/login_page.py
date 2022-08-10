@@ -70,7 +70,7 @@ class Login_Page:
         self.wait.until((EC.alert_is_present()))
         alert = self.driver.switch_to.alert
         alert.accept()
-        self.driver.forward()
+        # self.driver.forward()
 
     @allure.step
     @allure.description('Validation - the message from user profile page after successfully login')

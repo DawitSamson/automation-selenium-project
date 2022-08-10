@@ -1,3 +1,4 @@
+import time
 import allure
 from Web.Utils.utils import Utils
 from Web.Pages.accessibility_page import Accessibility_Page
@@ -53,5 +54,7 @@ class Test_User_Profile(Fixtures):
 
     def test_update_details(self):
         driver = self.driver
-        user = User_Profile_Page(driver)
-        pass
+        user = Utils(driver)
+        user.practice(1)
+        user.practice(3)
+        user.practice(4)
