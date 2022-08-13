@@ -6,7 +6,7 @@ import pytest
 from Web.Pages.user_profile_page import User_Profile_Page
 
 @pytest.mark.usefixtures('login_successfully')
-@pytest.mark.parametrize('browser', ['chrome'])
+@pytest.mark.parametrize('browser', ['chrome', 'firefox'])
 class Test_User_Profile(Fixtures):
 
     @allure.description('Accessibility test on about-us page clicking one color after the other')
@@ -60,7 +60,7 @@ class Test_User_Profile(Fixtures):
         utils.click_navbar_links_1(3)
         utils.click_navbar_links_1(4)
 
-    @allure.description('User log out correctly from the account')
+    @allure.description('User log out correctly from the user account')
     @pytest.mark.sanity
     @allure.severity(allure.severity_level.CRITICAL)
     def test_log_out_correctly(self):

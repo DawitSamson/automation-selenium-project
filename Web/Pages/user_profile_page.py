@@ -76,7 +76,6 @@ class User_Profile_Page:
         alert = self.driver.switch_to.alert
         for i in range(2):
             alert.accept()
-        alert.accept()
         self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, self.validationForLogOutButton)))
 
     @allure.step

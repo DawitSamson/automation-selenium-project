@@ -98,3 +98,11 @@ class Test_AboutUs(Fixtures, Base):
         accessibility.clicking_color(1)
         accessibility.clicking_color(4)
         accessibility.clicking_color(1)
+
+    @allure.description('Navigate to Google map link')
+    @allure.severity(allure.severity_level.MINOR)
+    def test_google_maps(self):
+        driver = self.driver
+        about = AboutUs_Page(driver)
+        about.about_us_page()
+        about.google_maps()
