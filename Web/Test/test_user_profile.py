@@ -1,4 +1,3 @@
-import time
 import allure
 from Web.Utils.utils import Utils
 from Web.Pages.accessibility_page import Accessibility_Page
@@ -52,9 +51,19 @@ class Test_User_Profile(Fixtures):
         search.searching(city_name)
         search.assertion('No City Found', search.city_name_incorrectly())
 
-    def test_update_details(self):
+    @allure.description('Clicking all the navbar links')
+    @pytest.mark.sanity
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_nav_bar_links(self):
         driver = self.driver
-        user = Utils(driver)
-        user.practice(1)
-        user.practice(3)
-        user.practice(4)
+        utils = Utils(driver)
+        utils.click_navbar_links_1(3)
+        utils.click_navbar_links_1(4)
+
+    @allure.description('User log out correctly from the account')
+    @pytest.mark.sanity
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_log_out_correctly(self):
+        driver = self.driver
+        user = User_Profile_Page(driver)
+        user.click_on_log_out_button()

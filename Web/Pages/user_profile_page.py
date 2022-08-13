@@ -76,6 +76,7 @@ class User_Profile_Page:
         alert = self.driver.switch_to.alert
         for i in range(2):
             alert.accept()
+        alert.accept()
         self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, self.validationForLogOutButton)))
 
     @allure.step
@@ -83,3 +84,12 @@ class User_Profile_Page:
     def click_on_update_button(self):
         self.driver.find_element(By.XPATH, self.updateButton).click()
 
+    @allure.step
+    @allure.description('update profile - insert values and click update button')
+    def update_profile(self, first_name, last_name, email, date, image):
+        self.enter_first_name(first_name)
+        self.enter_last_name(last_name)
+        self.enter_email(email)
+        self.enter_date(date)
+        self.enter_image_name(image)
+        self.click_on_update_button()

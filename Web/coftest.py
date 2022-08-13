@@ -10,7 +10,7 @@ class Fixtures(Base):
         driver = self.driver
         login = Login_Page(driver)
         login.login_page()
-        login.enter_email('Yosef@gmail.com')
+        login.enter_email('Yosf@gmail.com')
         login.enter_password('123456')
         login.login_button()
         login.accept_alert()

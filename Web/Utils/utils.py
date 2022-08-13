@@ -44,17 +44,12 @@ class Utils:
         return self.driver.find_element(By.XPATH, self.errorCityName).get_attribute('innerText')
 
     @allure.step
-    @allure.description('Return all the list with links on navbar when the user doesnt connect')
-    def navbar_links_list(self):
-        links = self.driver.find_elements(By.XPATH, self.navBarLinks)
-        self.assertion(4, len(links))
-        return links
-
-    @allure.step
-    @allure.description('Clicking on all the links in the navbar and return to the current page')
+    @allure.description('Clicking on all the links in the navbar and return to the current page when user not connect')
     def click_navbar_links(self, page_name):
         driver = self.driver
-        nav_bar_links = self.navbar_links_list()
+        nav_bar_links = self.driver.find_elements(By.XPATH, self.navBarLinks)
+        self.assertion(4, len(nav_bar_links))
+
         for link in range(len(nav_bar_links)):
             if nav_bar_links[link].text == page_name:
                 continue
@@ -73,14 +68,9 @@ class Utils:
                 self.assertion(driver.current_url, 'https://trip-yoetz.herokuapp.com/')
             driver.back()
 
-
-
-
-
-
-
-
-    def practice(self, div_option: int):
+    @allure.step
+    @allure.description('Clicking on all the links in the navbar and return to the current page when user is connect')
+    def click_navbar_links_1(self, div_option: int):
         locator = f'//header/div[{div_option}]/a'
         link = self.driver.find_element(By.XPATH, locator)
         if div_option == 1:
@@ -95,8 +85,3 @@ class Utils:
         else:
             raise ValueError('div_position need to be 1,3,4')
         self.driver.back()
-
-    def practice12(self):
-        self.practice(3)
-        self.practice(1)
-        self.practice(4)
