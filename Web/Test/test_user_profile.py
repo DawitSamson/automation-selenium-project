@@ -67,3 +67,14 @@ class Test_User_Profile(Fixtures):
         driver = self.driver
         user = User_Profile_Page(driver)
         user.click_on_log_out_button()
+
+    @allure.description('User log out correctly from the user account')
+    @pytest.mark.sanity
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_update_user_fullname(self):
+        driver = self.driver
+        user = User_Profile_Page(driver)
+        user.click_on_edit_profile_button()
+        user.enter_first_name('')
+        user.enter_last_name('')
+        user.click_on_update_button()
