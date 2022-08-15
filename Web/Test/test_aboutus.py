@@ -5,6 +5,7 @@ from Web.Pages.aboutus_page import AboutUs_Page
 from Web.Base.base import Base
 from Web.coftest import Fixtures
 from Web.Pages.accessibility_page import Accessibility_Page
+from Web.Pages.web_page import Web_Page
 
 @pytest.mark.usefixtures('set_up')
 @pytest.mark.parametrize('browser', ['chrome', 'firefox'])
@@ -46,10 +47,10 @@ class Test_AboutUs(Fixtures, Base):
         city_name = 'London'
         driver = self.driver
         about_us = AboutUs_Page(driver)
-        search = Utils(driver)
+        search = Web_Page(driver)
         about_us.about_us_page()
         search.searching(city_name)
-        search.assertion(f'Discover {city_name}', search.city_name_correctly())
+        Utils(driver).assertion(f'Discover {city_name}', search.city_name_correctly())
 
     @allure.description('Searching incorrectly')
     @pytest.mark.sanity
@@ -58,20 +59,20 @@ class Test_AboutUs(Fixtures, Base):
         city_name = '567'
         driver = self.driver
         about_us = AboutUs_Page(driver)
-        search = Utils(driver)
+        search = Web_Page(driver)
         about_us.about_us_page()
         search.searching(city_name)
-        search.assertion('No City Found', search.city_name_incorrectly())
+        Utils(driver).assertion('No City Found', search.city_name_incorrectly())
 
     @allure.description('Navigate from about-us page to all the pages in the website')
     @pytest.mark.sanity
     @allure.severity(allure.severity_level.CRITICAL)
     def test_navbar_links(self):
         driver = self.driver
-        links = Utils(driver)
         about_us = AboutUs_Page(driver)
         about_us.about_us_page()
-        links.click_navbar_links('About us')
+        web_page = Web_Page(driver)
+        web_page.click_navbar_links('About us')
 
     @allure.description('Accessibility test on about-us page clicking one color after the other')
     @allure.severity(allure.severity_level.NORMAL)

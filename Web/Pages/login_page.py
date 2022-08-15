@@ -73,6 +73,31 @@ class Login_Page:
         # self.driver.forward()
 
     @allure.step
+    @allure.description('Validation - all email and password format messages')
+    def email_and_password_combinations(self, emails: list, passwords: list):
+        for email in range(len(emails)):
+            for password in range(len(passwords)):
+                self.enter_email(emails[email])
+                self.enter_password(passwords[password])
+                self.login_button()
+                if 'include' in self.js_email():
+                    Utils(self.driver).assertion(f"Please include an '@' in the email address."
+                                                 f" '{emails[email]}' is missing an '@'.", self.js_email())
+                elif 'enter' in self.js_email():
+                    Utils(self.driver).assertion(f"Please enter a part following '@'. "
+                                                 f"'{emails[email]}' is incomplete.", self.js_email())
+                elif 'used at' in self.js_email():
+                    msg = Utils(self.driver).slicing(emails[email], '@')
+                    Utils(self.driver).assertion(f"'.' is used at a wrong position in '{msg}'.", self.js_email())
+                if len(passwords[password]) == 1:
+                    Utils(self.driver).assertion("Please lengthen this text to 4 characters or more "
+                                                 "(you are currently using 1 character).", self.js_password())
+                elif len(passwords[password]) in range(2, 4):
+                    Utils(self.driver).assertion(f"Please lengthen this text to 4 characters or more"
+                                                 f" (you are currently using {len(passwords[password])}"
+                                                 f" characters).", self.js_password())
+
+    @allure.step
     @allure.description('Validation - the message from user profile page after successfully login')
     def login_validation_message(self):
         self.wait.until(EC.visibility_of_all_elements_located((By.XPATH, self.loginValidationMessage)))

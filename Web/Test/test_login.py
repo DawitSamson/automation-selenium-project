@@ -5,6 +5,7 @@ from Web.Base.base import Base
 from Web.Pages.login_page import Login_Page
 from Web.Utils.utils import Utils
 from Web.coftest import Fixtures
+from Web.Pages.web_page import Web_Page
 
 @pytest.mark.usefixtures('set_up')
 @pytest.mark.parametrize('browser', ['chrome', 'firefox'])
@@ -20,45 +21,14 @@ class Test_Login(Fixtures, Base):
     @allure.description('Login when the values in the fields are invalid')
     @pytest.mark.regression
     @allure.severity(allure.severity_level.NORMAL)
-    @pytest.mark.xfail(reason='Email and password format messages are different on 2 browsers\n change this test(page)')
+    @pytest.mark.xfail(reason='Email and password format messages are different on 2 browsers')
     def test_login_invalid_fields_all_the_options(self):
+        emails = ['Avi', 'Yosef@', 'Miki@.com', '!!!!']
+        passwords = ['5', '10', '100', '', '1115555']
         driver = self.driver
         login = Login_Page(driver)
         login.login_page()
-        emails = ['Fasil', 'Yosef@', 'Miki@.com', '!!!!']
-        passwords = ['5', '10', '100', '', '1115555']
-
-        for i in range(len(emails)):
-            for j in range(len(passwords)):
-                login.enter_email(emails[i])
-                login.enter_password(passwords[j])
-                login.login_button()
-                """ All The Email Format Messages In The input """
-                # Message 1:
-                if "חסר '@' " in login.js_email():
-                    Utils(driver).assertion(login.js_email(),
-                                            f"אני רוצה לכלול '@' בכתובת האימייל. ב-'{emails[i]}' חסר '@'.")
-                # Message 2:
-                elif "אינו מלא" in login.js_email():
-                    Utils(driver).assertion(login.js_email(), f"יש להזין חלק ואחריו '@'. השדה '{emails[i]}' אינו מלא.")
-                # Message 3:
-                elif "שגוי" in login.js_email():
-                    invalid_email = emails[i]
-                    for letter in range(len(invalid_email)):
-                        if invalid_email[letter] == '@':
-                            text_for_assertion = invalid_email[letter+1:]
-                            Utils(driver).assertion(login.js_email(), f"נעשה שימוש "
-                                                                      f"ב-'.' במיקום שגוי ב-'{text_for_assertion}'.")
-
-                """ All The Password Format Messages In the input"""
-                # Message 1:
-                if len(passwords[j]) in range(2, 4):
-                    Utils(driver).assertion(login.js_password(), f'Please lengthen this text to 4 characters '
-                                                                 f'or more (you are currently '
-                                                                 f'using {len(passwords[j])} characters).')
-                elif len(passwords[j]) == 1:
-                    Utils(driver).assertion(login.js_password(), 'Please lengthen this text to 4 characters or more'
-                                                                 ' (you are currently using 1 character).')
+        login.email_and_password_combinations(emails, passwords)
 
     @allure.description('Login incorrectly when the email is correct and the password is incorrect')
     @allure.severity(allure.severity_level.CRITICAL)
@@ -90,9 +60,9 @@ class Test_Login(Fixtures, Base):
         driver = self.driver
         login = Login_Page(driver)
         login.login_page()
-        search = Utils(driver)
+        search = Web_Page(driver)
         search.searching(city)
-        search.assertion(f'Discover {city}', search.city_name_correctly())
+        Utils(driver).assertion(f'Discover {city}', search.city_name_correctly())
 
     @allure.description('Searching incorrectly')
     @allure.severity(allure.severity_level.CRITICAL)
@@ -102,9 +72,9 @@ class Test_Login(Fixtures, Base):
         driver = self.driver
         login = Login_Page(driver)
         login.login_page()
-        search = Utils(driver)
+        search = Web_Page(driver)
         search.searching(city)
-        search.assertion('No City Found', search.city_name_incorrectly())
+        Utils(driver).assertion('No City Found', search.city_name_incorrectly())
 
     @allure.description('Navigate from login page to all the pages in the website')
     @allure.severity(allure.severity_level.CRITICAL)
@@ -113,8 +83,8 @@ class Test_Login(Fixtures, Base):
         driver = self.driver
         login = Login_Page(driver)
         login.login_page()
-        x = Utils(driver)
-        x.click_navbar_links('Login')
+        web_page = Web_Page(driver)
+        web_page.click_navbar_links('Login')
 
     @allure.description('Verify all the text in the page')
     @allure.severity(allure.severity_level.NORMAL)

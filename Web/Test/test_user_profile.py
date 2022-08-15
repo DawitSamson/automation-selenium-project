@@ -1,4 +1,6 @@
 import allure
+
+from Web.Pages.web_page import Web_Page
 from Web.Utils.utils import Utils
 from Web.Pages.accessibility_page import Accessibility_Page
 from Web.coftest import Fixtures
@@ -37,9 +39,9 @@ class Test_User_Profile(Fixtures):
     def test_search_correctly(self):
         city_name = 'Barcelona'
         driver = self.driver
-        search = Utils(driver)
+        search = Web_Page(driver)
         search.searching(city_name)
-        search.assertion(f'Discover {city_name}', search.city_name_correctly())
+        Utils(driver).assertion(f'Discover {city_name}', search.city_name_correctly())
 
     @allure.description('Searching incorrectly')
     @pytest.mark.sanity
@@ -47,18 +49,18 @@ class Test_User_Profile(Fixtures):
     def test_search_incorrectly(self):
         city_name = '!!!'
         driver = self.driver
-        search = Utils(driver)
+        search = Web_Page(driver)
         search.searching(city_name)
-        search.assertion('No City Found', search.city_name_incorrectly())
+        Utils(driver).assertion('No City Found', search.city_name_incorrectly())
 
     @allure.description('Clicking all the navbar links')
     @pytest.mark.sanity
     @allure.severity(allure.severity_level.CRITICAL)
     def test_nav_bar_links(self):
         driver = self.driver
-        utils = Utils(driver)
-        utils.click_navbar_links_1(3)
-        utils.click_navbar_links_1(4)
+        web_page = Web_Page(driver)
+        web_page.click_navbar_links_1(3)
+        web_page.click_navbar_links_1(4)
 
     @allure.description('User log out correctly from the user account')
     @pytest.mark.sanity
@@ -75,6 +77,6 @@ class Test_User_Profile(Fixtures):
         driver = self.driver
         user = User_Profile_Page(driver)
         user.click_on_edit_profile_button()
-        user.enter_first_name('')
-        user.enter_last_name('')
+        user.enter_first_name('Benny')
+        user.enter_last_name('Lagasa')
         user.click_on_update_button()
