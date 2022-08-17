@@ -8,8 +8,8 @@ class User_Profile_Locators:
     EMAIL_INPUT = 'input[name="email"]'
     BIRTH_DATE_INPUT = 'input[name="birthDate"]'
     IMAGE_INPUT = 'input[name="image"]'
-
     LOG_OUT_BUTTON = 'button[class="logout-btn"]'
     VALIDATION_FOR_LOG_BUTTON = 'section[class="sc-pVTFL jQTpoc"]'
-
     UPDATE_BUTTON = '//form/button'
+    FULL_NAME = '//div[2]/h2[1]'
+    AGE = '//div[2]/h2[2]'

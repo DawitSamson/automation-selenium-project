@@ -1,5 +1,4 @@
 import allure
-
 from Web.Pages.web_page import Web_Page
 from Web.Utils.utils import Utils
 from Web.Pages.accessibility_page import Accessibility_Page
@@ -61,6 +60,7 @@ class Test_User_Profile(Fixtures):
         web_page = Web_Page(driver)
         web_page.click_navbar_links_1(3)
         web_page.click_navbar_links_1(4)
+        Utils(driver).assertion('https://trip-yoetz.herokuapp.com/profile', self.driver.current_url)
 
     @allure.description('User log out correctly from the user account')
     @pytest.mark.sanity
@@ -75,8 +75,90 @@ class Test_User_Profile(Fixtures):
     @allure.severity(allure.severity_level.CRITICAL)
     def test_update_user_fullname(self):
         driver = self.driver
+        f_name = 'Avi'
+        l_name = 'Saba'
         user = User_Profile_Page(driver)
         user.click_on_edit_profile_button()
-        user.enter_first_name('Benny')
-        user.enter_last_name('Lagasa')
+        user.enter_first_name(f_name)
+        user.enter_last_name(l_name)
         user.click_on_update_button()
+        Utils(driver).assertion(f"Name: {f_name} {l_name}", user.full_name_value())
+
+    @allure.description('Update user first name Incorrectly when the length of first name lower than 2')
+    @pytest.mark.sanity
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_update_user_first_name_incorrectly1(self):
+        driver = self.driver
+        f_name = 'a'
+        user = User_Profile_Page(driver)
+        user.click_on_edit_profile_button()
+        user.enter_first_name(f_name)
+        user.click_on_update_button()
+        Utils(driver).assertion("Please lengthen this text to 2 characters or more "
+                                "(you are currently using 1 character).",
+                                user.error_message(user.enter_first_name(f_name), 'validationMessage'))
+
+    @allure.description('Update user last name Incorrectly when the length of first name lower than 2')
+    @pytest.mark.sanity
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_update_user_last_name_incorrectly1(self):
+        driver = self.driver
+        l_name = 'a'
+        user = User_Profile_Page(driver)
+        user.click_on_edit_profile_button()
+        user.enter_last_name(l_name)
+        user.click_on_update_button()
+        Utils(driver).assertion("Please lengthen this text to 2 characters or more "
+                                "(you are currently using 1 character).",
+                                user.error_message(user.enter_last_name(l_name), 'validationMessage'))
+
+    @allure.description('Update user last name Incorrectly when the length of first name greater than 10')
+    @allure.severity(allure.severity_level.CRITICAL)
+    @pytest.mark.xfail(reason='first name value with length (11) and actual value send with length (10),test is passed')
+    def test_update_user_first_name_incorrectly2(self):
+        f_name = 'abcdefgijkl'
+        driver = self.driver
+        user = User_Profile_Page(driver)
+        user.click_on_edit_profile_button()
+        user.enter_first_name(f_name)
+        user.click_on_update_button()
+
+    @allure.description('Update user birth date correctly')
+    @pytest.mark.sanity
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_update_birth_date(self):
+        year, month, day = '1995', '10', '09'
+        driver = self.driver
+        user = User_Profile_Page(driver)
+        user.click_on_edit_profile_button()
+        user.enter_date('{}-{}-{}'.format(year, month, day))
+        user.click_on_update_button()
+        Utils(driver).assertion(f"Age: {2022-int(year)}", user.age_value())
+
+    @allure.description('Update user birth date incorrectly when birth greater than 01-01-2004')
+    @pytest.mark.sanity
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_update_birth_date_incorrectly1(self):
+        year, month, day = '2005', '01', '01'
+        date = '{}-{}-{}'.format(year, month, day)
+        driver = self.driver
+        user = User_Profile_Page(driver)
+        user.click_on_edit_profile_button()
+        user.enter_date(date)
+        user.click_on_update_button()
+        Utils(driver).assertion("Value must be 01/01/2004 or earlier.",
+                                user.error_message(user.enter_date(date), 'validationMessage'))
+
+    @allure.description('Update user birth date incorrectly when birth lower than 01-01-1902')
+    @pytest.mark.sanity
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_update_birth_date_incorrectly2(self):
+        year, month, day = '1901', '01', '01'
+        date = '{}-{}-{}'.format(year, month, day)
+        driver = self.driver
+        user = User_Profile_Page(driver)
+        user.click_on_edit_profile_button()
+        user.enter_date(date)
+        user.click_on_update_button()
+        Utils(driver).assertion("Value must be 01/01/1902 or later.",
+                                user.error_message(user.enter_date(date), 'validationMessage'))
