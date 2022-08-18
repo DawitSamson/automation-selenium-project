@@ -5,7 +5,7 @@ from Web.Base.base import Base
 import pytest
 
 class Fixtures(Base):
-    @pytest.fixture()
+    @pytest.fixture(name='pre_condition')
     def login_successfully(self):
         driver = self.driver
         login = Login_Page(driver)

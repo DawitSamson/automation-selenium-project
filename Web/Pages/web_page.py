@@ -1,7 +1,7 @@
 import allure
 from Web.Utils.utils import Utils
 from selenium.webdriver.chrome.webdriver import WebDriver
-from Web.Locators.web_locators import Web_Locators
+from Web.Locators.locators_web import Web_Locators
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 

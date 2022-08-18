@@ -6,7 +6,7 @@ from Web.coftest import Fixtures
 import pytest
 from Web.Pages.user_profile_page import User_Profile_Page
 
-@pytest.mark.usefixtures('login_successfully')
+@pytest.mark.usefixtures('pre_condition')
 @pytest.mark.parametrize('browser', ['chrome', 'firefox'])
 class Test_User_Profile(Fixtures):
 
