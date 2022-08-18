@@ -10,7 +10,7 @@ from Web.Utils.utils import Utils
 class User_Profile_Page:
     def __init__(self, driver: WebDriver):
         self.driver = driver
-        self.wait = WebDriverWait(self.driver, 20)
+        self.wait = WebDriverWait(self.driver, 10)
 
         self.editButton = User_Profile_Locators.EDIT_PROFILE_BUTTON
         self.validationForEditButton = User_Profile_Locators.VALIDATION_FOR_EDIT_BUTTON
