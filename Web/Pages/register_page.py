@@ -67,3 +67,12 @@ class Register_Page(User_Profile_Page, Login_Page):
     @allure.description('Validation- error message when user that already exist trying to register')
     def user_already_exist_error(self):
         return self.driver.find_element(By.XPATH, self.userExistError).get_attribute('textContent')
+
+    def enter_register_values(self, f_name, l_name, birth_date, email, image, password1, password2):
+        self.enter_first_name(f_name)
+        self.enter_last_name(l_name)
+        self.enter_date(birth_date)
+        self.enter_email(email)
+        self.enter_image_name(image)
+        self.enter_password(password1)
+        self.enter_confirm_password(password2)
