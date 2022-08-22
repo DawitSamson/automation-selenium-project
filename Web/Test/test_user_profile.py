@@ -94,8 +94,7 @@ class Test_User_Profile(Fixtures):
         user.click_on_edit_profile_button()
         user.enter_first_name(f_name)
         user.click_on_update_button()
-        Utils(driver).assertion("Please lengthen this text to 2 characters or more "
-                                "(you are currently using 1 character).",
+        Utils(driver).assertion('עליך להאריך את הטקסט ל-2 תווים או יותר (כרגע יש תו אחד).',
                                 user.error_message(user.enter_first_name(f_name), 'validationMessage'))
 
     @allure.description('Update user last name Incorrectly when the length of first name lower than 2')
@@ -108,8 +107,7 @@ class Test_User_Profile(Fixtures):
         user.click_on_edit_profile_button()
         user.enter_last_name(l_name)
         user.click_on_update_button()
-        Utils(driver).assertion("Please lengthen this text to 2 characters or more "
-                                "(you are currently using 1 character).",
+        Utils(driver).assertion('עליך להאריך את הטקסט ל-2 תווים או יותר (כרגע יש תו אחד).',
                                 user.error_message(user.enter_last_name(l_name), 'validationMessage'))
 
     @allure.description('Update user last name Incorrectly when the length of first name greater than 10')
@@ -146,7 +144,7 @@ class Test_User_Profile(Fixtures):
         user.click_on_edit_profile_button()
         user.enter_date(date)
         user.click_on_update_button()
-        Utils(driver).assertion("Value must be 01/01/2004 or earlier.",
+        Utils(driver).assertion('על הערך להיות 01/01/2004 או מוקדם יותר.',
                                 user.error_message(user.enter_date(date), 'validationMessage'))
 
     @allure.description('Update user birth date incorrectly when birth lower than 01-01-1902')
@@ -160,5 +158,5 @@ class Test_User_Profile(Fixtures):
         user.click_on_edit_profile_button()
         user.enter_date(date)
         user.click_on_update_button()
-        Utils(driver).assertion("Value must be 01/01/1902 or later.",
+        Utils(driver).assertion('על הערך להיות 01/01/1902 ומעלה.',
                                 user.error_message(user.enter_date(date), 'validationMessage'))
