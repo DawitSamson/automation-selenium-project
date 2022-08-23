@@ -35,5 +35,10 @@ class AboutUs_Page:
         self.driver.switch_to.frame(iframe)
         link = self.driver.find_element(By.CSS_SELECTOR, self.googleMapLink)
         link.click()
-        self.wait.until(EC.url_to_be("https://maps.google.com/maps?ll=31.95411,34.891011&z=17&t=m&hl=iw&gl"
-                                     "=IL&mapclient=embed"))
+        Utils(self.driver).assertion(2, len(self.driver.window_handles))
+        google_maps_page = self.driver.window_handles[1]
+        self.driver.switch_to.window(google_maps_page)
+        self.wait.until(EC.url_to_be(
+            "https://www.google.com/maps?ll=31.95411,34.891011&z=17&t=m&hl=iw&gl=IL&mapclient=embed"))
+
+

@@ -102,8 +102,11 @@ class Test_AboutUs(Fixtures, Base):
 
     @allure.description('Navigate to Google map link')
     @allure.severity(allure.severity_level.MINOR)
-    def test_google_maps(self):
+    def test_google_maps_link(self):
         driver = self.driver
         about = AboutUs_Page(driver)
         about.about_us_page()
         about.google_maps()
+        Utils(driver).assertion(
+            "https://www.google.com/maps?ll=31.95411,34.891011&z=17&t=m&hl=iw&gl=IL&mapclient=embed",
+            self.driver.current_url)
