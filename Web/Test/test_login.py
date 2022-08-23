@@ -21,10 +21,9 @@ class Test_Login(Fixtures, Base):
     @allure.description('Login when the values in the fields are invalid')
     @pytest.mark.regression
     @allure.severity(allure.severity_level.NORMAL)
-    @pytest.mark.xfail(reason='Email and password format messages are different on 2 browsers')
     def test_login_invalid_fields_all_the_options(self):
-        emails = ['Avi', 'Yosef@', 'Miki@.com', '!!!!']
-        passwords = ['5', '10', '100', '', '1115555']
+        emails = ['Avi', 'Yosef@', 'Miki@gmail.', 'Dert@gmail.com']
+        passwords = ['5', '10', '100', '']
         driver = self.driver
         login = Login_Page(driver)
         login.login_page()

@@ -82,20 +82,27 @@ class Login_Page:
                 self.login_button()
                 if 'include' in self.js_email():
                     Utils(self.driver).assertion(f"Please include an '@' in the email address."
-                                                 f" '{emails[email]}' is missing an '@'.", self.js_email())
+                                                 f" '{emails[email]}' is missing an '@'.", self.js_email(),
+                                                 "Please enter an email address.")
                 elif 'enter' in self.js_email():
                     Utils(self.driver).assertion(f"Please enter a part following '@'. "
-                                                 f"'{emails[email]}' is incomplete.", self.js_email())
+                                                 f"'{emails[email]}' is incomplete.", self.js_email(),
+                                                 "Please enter an email address.")
                 elif 'used at' in self.js_email():
                     msg = Utils(self.driver).slicing(emails[email], '@')
-                    Utils(self.driver).assertion(f"'.' is used at a wrong position in '{msg}'.", self.js_email())
+                    Utils(self.driver).assertion(f"'.' is used at a wrong position in '{msg}'.", self.js_email(),
+                                                 "Please enter an email address.")
                 if len(passwords[password]) == 1:
                     Utils(self.driver).assertion("Please lengthen this text to 4 characters or more "
-                                                 "(you are currently using 1 character).", self.js_password())
+                                                 "(you are currently using 1 character).", self.js_password(),
+                                                 "Please use at least 4 characters "
+                                                 "(you are currently using 1 characters).")
                 elif len(passwords[password]) in range(2, 4):
                     Utils(self.driver).assertion(f"Please lengthen this text to 4 characters or more"
                                                  f" (you are currently using {len(passwords[password])}"
-                                                 f" characters).", self.js_password())
+                                                 f" characters).", self.js_password(),
+                                                 "Please use at least 4 characters "
+                                                 f"(you are currently using {len(passwords[password])} characters).")
 
     @allure.step
     @allure.description('Validation - the message from user profile page after successfully login')
