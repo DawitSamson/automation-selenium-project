@@ -72,7 +72,8 @@ class Test_Register(Fixtures, Base):
         register.click_on_register_button()
         Utils(driver).assertion(
             'עליך להאריך את הטקסט ל-2 תווים או יותר (כרגע יש תו אחד).',
-            register.error_message(register.enter_first_name(value), 'validationMessage'))
+            register.error_message(register.enter_first_name(value), 'validationMessage'),
+            'Please use at least 2 characters (you are currently using 1 characters).')
 
     @allure.description('Trying register incorrectly when first name is null')
     @allure.severity(allure.severity_level.NORMAL)
@@ -84,7 +85,8 @@ class Test_Register(Fixtures, Base):
         register.click_on_register_button()
         Utils(driver).assertion(
             'זהו שדה חובה.',
-            register.error_message(register.enter_first_name(''), 'validationMessage'))
+            register.error_message(register.enter_first_name(''), 'validationMessage'),
+            'Please fill out this field.')
 
     @allure.description('Trying register incorrectly when last name is less than 2 characters')
     @allure.severity(allure.severity_level.NORMAL)
@@ -97,7 +99,8 @@ class Test_Register(Fixtures, Base):
         register.click_on_register_button()
         Utils(driver).assertion(
             'עליך להאריך את הטקסט ל-2 תווים או יותר (כרגע יש תו אחד).',
-            register.error_message(register.enter_last_name(value), 'validationMessage'))
+            register.error_message(register.enter_last_name(value), 'validationMessage'),
+            'Please use at least 2 characters (you are currently using 1 characters).')
 
     @allure.description('Trying register incorrectly when last name is null')
     @allure.severity(allure.severity_level.NORMAL)
@@ -109,7 +112,8 @@ class Test_Register(Fixtures, Base):
         register.click_on_register_button()
         Utils(driver).assertion(
             'זהו שדה חובה.',
-            register.error_message(register.enter_last_name(''), 'validationMessage'))
+            register.error_message(register.enter_last_name(''), 'validationMessage'),
+            'Please fill out this field.')
 
     @allure.description('Trying register incorrectly when birth date is greater than 01-01-2004')
     @allure.severity(allure.severity_level.NORMAL)
@@ -121,7 +125,8 @@ class Test_Register(Fixtures, Base):
         register.enter_register_values('Avihu', 'Natan', value, 'Naw2@gmail.com', 'None', '123456', '123456')
         register.click_on_register_button()
         Utils(driver).assertion('על הערך להיות 01/01/2004 או מוקדם יותר.',
-                                register.error_message(register.enter_date(value), 'validationMessage'))
+                                register.error_message(register.enter_date(value), 'validationMessage'),
+                                'Please select a value that is no later than 2004-01-01.')
 
     @allure.description('Trying register incorrectly when birth date is less than 01-01-1902')
     @allure.severity(allure.severity_level.NORMAL)
@@ -133,5 +138,5 @@ class Test_Register(Fixtures, Base):
         register.enter_register_values('Avihu', 'Natan', value, 'Naw2@gmail.com', 'None', '123456', '123456')
         register.click_on_register_button()
         Utils(driver).assertion('על הערך להיות 01/01/1902 ומעלה.',
-                                register.error_message(register.enter_date(value), 'validationMessage'))
-
+                                register.error_message(register.enter_date(value), 'validationMessage'),
+                                'Please select a value that is no earlier than 1902-01-01.')
