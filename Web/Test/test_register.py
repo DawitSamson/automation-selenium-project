@@ -35,13 +35,7 @@ class Test_Register(Fixtures, Base):
         driver = self.driver
         register = Register_Page(driver)
         register.register_page()
-        register.enter_first_name('ces')
-        register.enter_last_name('ces')
-        register.enter_date('1990-10-10')
-        register.enter_email('Yosef@gmail.com')
-        register.enter_image_name('no Imange')
-        register.enter_password('123456')
-        register.enter_confirm_password('123456')
+        register.enter_register_values('ces', 'ces', '1990-10-10', 'Yosef@gmail.com', 'NoImage', '123456', '123456')
         register.click_on_register_button()
         Utils(driver).assertion("user with that email already exists", register.user_already_exist_error())
 
@@ -51,13 +45,7 @@ class Test_Register(Fixtures, Base):
         driver = self.driver
         register = Register_Page(driver)
         register.register_page()
-        register.enter_first_name('ces')
-        register.enter_last_name('ces')
-        register.enter_date('1990-10-10')
-        register.enter_email('Yosef@gmail.com')
-        register.enter_image_name('no Imange')
-        register.enter_password('123456')
-        register.enter_confirm_password('654321')
+        register.enter_register_values('ces', 'ces', '1990-10-10', 'Yosef@gmail.com', 'NoImage', '123456', '654321')
         register.click_on_register_button()
         Utils(driver).assertion("passwords not matching", register.password_not_matching_error())
 
