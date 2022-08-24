@@ -1,12 +1,14 @@
+""" NavBar page, contain all the actions (links, search)"""
+
 import allure
 from Web.Utils.utils import Utils
 from selenium.webdriver.chrome.webdriver import WebDriver
-from Web.Locators.locators_web import Web_Locators
+from Web.Locators.Web_Locators.locators_navbar import Web_Locators
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 
-class Web_Page:
+class NavBar:
     def __init__(self, driver: WebDriver):
         self.driver = driver
         self.searchField = Web_Locators.SEARCH_FIELD

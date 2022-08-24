@@ -27,4 +27,3 @@ class Utils:
             if text[i] == end:
                 new_text = text[i + 1:]
         return new_text
-

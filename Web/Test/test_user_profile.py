@@ -1,7 +1,7 @@
 import allure
-from Web.Pages.web_page import Web_Page
+from Web.Pages.Web_Page.navbar_page import NavBar
 from Web.Utils.utils import Utils
-from Web.Pages.accessibility_page import Accessibility_Page
+from Web.Pages.Web_Page.accessibility_page import Accessibility_Page
 from Web.coftest import Fixtures
 import pytest
 from Web.Pages.user_profile_page import User_Profile_Page
@@ -38,7 +38,7 @@ class Test_User_Profile(Fixtures):
     def test_search_correctly(self):
         city_name = 'Barcelona'
         driver = self.driver
-        search = Web_Page(driver)
+        search = NavBar(driver)
         search.searching(city_name)
         Utils(driver).assertion(f'Discover {city_name}', search.city_name_correctly())
 
@@ -48,7 +48,7 @@ class Test_User_Profile(Fixtures):
     def test_search_incorrectly(self):
         city_name = '!!!'
         driver = self.driver
-        search = Web_Page(driver)
+        search = NavBar(driver)
         search.searching(city_name)
         Utils(driver).assertion('No City Found', search.city_name_incorrectly())
 
@@ -57,7 +57,7 @@ class Test_User_Profile(Fixtures):
     @allure.severity(allure.severity_level.CRITICAL)
     def test_nav_bar_links(self):
         driver = self.driver
-        web_page = Web_Page(driver)
+        web_page = NavBar(driver)
         web_page.click_navbar_links_1(3)
         web_page.click_navbar_links_1(4)
         Utils(driver).assertion('https://trip-yoetz.herokuapp.com/profile', self.driver.current_url)

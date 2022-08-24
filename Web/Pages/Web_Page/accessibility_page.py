@@ -1,9 +1,11 @@
+""" Accessibility page, contains all the actions (colors ruler, color choice) """
+
 import allure
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
-from Web.Locators.locators_accessibility import Locators_Accessibility
+from Web.Locators.Web_Locators.locators_accessibility import Locators_Accessibility
 
 class Accessibility_Page:
     def __init__(self, driver: WebDriver):

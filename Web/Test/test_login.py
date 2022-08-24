@@ -1,11 +1,11 @@
 import allure
 import pytest
-from Web.Pages.accessibility_page import Accessibility_Page
+from Web.Pages.Web_Page.accessibility_page import Accessibility_Page
 from Web.Base.base import Base
 from Web.Pages.login_page import Login_Page
 from Web.Utils.utils import Utils
 from Web.coftest import Fixtures
-from Web.Pages.web_page import Web_Page
+from Web.Pages.Web_Page.navbar_page import NavBar
 
 @pytest.mark.usefixtures('set_up')
 @pytest.mark.parametrize('browser', ['chrome', 'firefox'])
@@ -59,7 +59,7 @@ class Test_Login(Fixtures, Base):
         driver = self.driver
         login = Login_Page(driver)
         login.login_page()
-        search = Web_Page(driver)
+        search = NavBar(driver)
         search.searching(city)
         Utils(driver).assertion(f'Discover {city}', search.city_name_correctly())
 
@@ -71,7 +71,7 @@ class Test_Login(Fixtures, Base):
         driver = self.driver
         login = Login_Page(driver)
         login.login_page()
-        search = Web_Page(driver)
+        search = NavBar(driver)
         search.searching(city)
         Utils(driver).assertion('No City Found', search.city_name_incorrectly())
 
@@ -82,7 +82,7 @@ class Test_Login(Fixtures, Base):
         driver = self.driver
         login = Login_Page(driver)
         login.login_page()
-        web_page = Web_Page(driver)
+        web_page = NavBar(driver)
         web_page.click_navbar_links('Login')
 
     @allure.description('Verify all the text in the page')
