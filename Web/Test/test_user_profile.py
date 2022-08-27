@@ -164,3 +164,18 @@ class Test_User_Profile(Fixtures):
         Utils(driver).assertion('על הערך להיות 01/01/1902 ומעלה.',
                                 user.error_message(user.enter_date(date), 'validationMessage'),
                                 'Please select a value that is no earlier than 1902-01-01.')
+
+    def test_add_comment_correctly(self):
+        pass
+
+    def test_select_items(self):
+        pass
+
+    def test_add_question_(self):
+        pass
+
+    def test_add_rating(self):
+        pass
+
+    def test_view_all(self):
+        pass
