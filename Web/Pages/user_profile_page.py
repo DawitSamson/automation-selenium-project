@@ -113,7 +113,3 @@ class User_Profile_Page:
     @allure.description('Validation- take th input and choose attribute(innerText, validationMessage)')
     def error_message(self, field: WebElement, attribute):
         return field.get_attribute(attribute)
-
-
-
-

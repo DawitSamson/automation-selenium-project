@@ -35,12 +35,9 @@ class Test_User_Profile(Fixtures):
     @allure.description('Searching correctly')
     @pytest.mark.sanity
     @allure.severity(allure.severity_level.CRITICAL)
-    def test_search_correctly(self):
-        city_name = 'Barcelona'
-        driver = self.driver
-        search = NavBar(driver)
-        search.searching(city_name)
-        Utils(driver).assertion(f'Discover {city_name}', search.city_name_correctly())
+    @pytest.mark.parametrize('city_name', ['Madrid'])
+    def test_search_correctly(self, search):
+        pass
 
     @allure.description('Searching incorrectly')
     @pytest.mark.sanity
@@ -165,7 +162,8 @@ class Test_User_Profile(Fixtures):
                                 user.error_message(user.enter_date(date), 'validationMessage'),
                                 'Please select a value that is no earlier than 1902-01-01.')
 
-    def test_add_comment_correctly(self):
+    @pytest.mark.parametrize('city_name', ['Madrid'])
+    def test_add_comment_correctly(self, search):
         pass
 
     def test_select_items(self):

@@ -1,5 +1,6 @@
 from time import sleep
 from Web.Utils.utils import Utils
+from Web.Pages.Web_Page.navbar_page import NavBar
 from Web.Pages.login_page import Login_Page
 from Web.Base.base import Base
 import pytest
@@ -18,3 +19,8 @@ class Fixtures(Base):
         driver.forward()
         login.click_profile_link()
         Utils(driver).assertion('YOUR INFORMATION', login.login_validation_message())
+
+    @pytest.fixture(name='search')
+    def search_correctly(self, city_name):
+        NavBar(driver=self.driver).searching(city_name)
+        Utils(driver=self.driver).assertion(f'Discover {city_name}', NavBar(driver=self.driver).city_name_correctly())
