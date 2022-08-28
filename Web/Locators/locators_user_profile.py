@@ -13,3 +13,8 @@ class User_Profile_Locators:
     UPDATE_BUTTON = '//form/button'
     FULL_NAME = '//div[2]/h2[1]'
     AGE = '//div[2]/h2[2]'
+    CITY_OPTION = '//ul/li[1]/a'
+    HOTELS_OPTION = '//ul/li[2]/a'
+    RESTAURANTS_OPTION = '//ul/li[3]/a'
+    ACTIVITIES_OPTION = '//ul/li[4]/a'
+    VALIDATION_FOR_NAVBAR_LIST_OPTION = 'h1[class="category-name-h1"]'

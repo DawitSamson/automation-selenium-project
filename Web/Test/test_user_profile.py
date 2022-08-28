@@ -7,7 +7,7 @@ import pytest
 from Web.Pages.user_profile_page import User_Profile_Page
 
 @pytest.mark.usefixtures('pre_condition')
-@pytest.mark.parametrize('browser', ['chrome', 'firefox'])
+@pytest.mark.parametrize('browser', ['chrome'])
 class Test_User_Profile(Fixtures):
 
     @allure.description('Accessibility test on about-us page clicking one color after the other')
@@ -161,6 +161,34 @@ class Test_User_Profile(Fixtures):
         Utils(driver).assertion('על הערך להיות 01/01/1902 ומעלה.',
                                 user.error_message(user.enter_date(date), 'validationMessage'),
                                 'Please select a value that is no earlier than 1902-01-01.')
+
+    @pytest.mark.parametrize('city_name', ['Madrid'])
+    def test_navigate_to_hotels(self, search):
+        driver = self.driver
+        user = User_Profile_Page(driver)
+        user.click_on_option_from_navbar_list('hotels')
+        Utils(driver).assertion('Hotels', user.category_name())
+
+    @pytest.mark.parametrize('city_name', ['Barcelona'])
+    def test_navigate_to_restaurants(self, search):
+        driver = self.driver
+        user = User_Profile_Page(driver)
+        user.click_on_option_from_navbar_list('restaurants')
+        Utils(driver).assertion('Restaurants', user.category_name())
+
+    @pytest.mark.parametrize('city_name', ['London'])
+    def test_navigate_to_activities(self, search):
+        driver = self.driver
+        user = User_Profile_Page(driver)
+        user.click_on_option_from_navbar_list('activities')
+        Utils(driver).assertion('Activities', user.category_name())
+
+    @pytest.mark.parametrize('city_name', ['Jerusalem'])
+    def test_navigate_to_city_from_another_option(self, search):
+        driver = self.driver
+        user = User_Profile_Page(driver)
+        self.test_navigate_to_restaurants(search)
+        user.click_on_option_from_navbar_list('city')
 
     @pytest.mark.parametrize('city_name', ['Madrid'])
     def test_add_comment_correctly(self, search):
