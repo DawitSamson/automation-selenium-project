@@ -18,3 +18,6 @@ class User_Profile_Locators:
     RESTAURANTS_OPTION = '//ul/li[3]/a'
     ACTIVITIES_OPTION = '//ul/li[4]/a'
     VALIDATION_FOR_NAVBAR_LIST_OPTION = 'h1[class="category-name-h1"]'
+    VALIDATION_FOR_CITY_OPTION = 'h1[class="city-name-h1"]'
+    SELECT_BOX = '//select/option'
+    SORT_BUTTON = 'button[class="sort-btn"]'

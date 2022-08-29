@@ -1,4 +1,5 @@
 import allure
+from selenium.webdriver.support.select import Select
 from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
@@ -30,6 +31,9 @@ class User_Profile_Page:
         self.restaurantsOption = User_Profile_Locators.RESTAURANTS_OPTION
         self.activitiesOption = User_Profile_Locators.ACTIVITIES_OPTION
         self.validationForNavBarList = User_Profile_Locators.VALIDATION_FOR_NAVBAR_LIST_OPTION
+        self.validationForCityOption = User_Profile_Locators.VALIDATION_FOR_CITY_OPTION
+        self.selectBox = User_Profile_Locators.SELECT_BOX
+        self.sortButton = User_Profile_Locators.SORT_BUTTON
 
     @allure.step
     @allure.description('Click on edit button Open the edit profile window')
@@ -114,26 +118,38 @@ class User_Profile_Page:
                 option.click()
             except ElementClickInterceptedException:
                 self.driver.execute_script('document.getElementsByClassName("navbar-link")[0].click()')
+            self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, self.validationForCityOption)))
         elif option_name == 'hotels':
             try:
                 self.wait.until(EC.element_to_be_clickable((By.XPATH, self.hotelsOption)))
                 self.driver.find_element(By.XPATH, self.hotelsOption).click()
             except ElementClickInterceptedException:
                 self.driver.execute_script('document.getElementsByClassName("navbar-link")[1].click()')
-
+            self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, self.validationForNavBarList)))
         elif option_name == 'restaurants':
             try:
                 self.wait.until(EC.element_to_be_clickable((By.XPATH, self.restaurantsOption)))
                 self.driver.find_element(By.XPATH, self.restaurantsOption).click()
             except ElementClickInterceptedException:
                 self.driver.execute_script('document.getElementsByClassName("navbar-link")[2].click()')
-
+            self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, self.validationForNavBarList)))
         elif option_name == 'activities':
             try:
                 self.wait.until(EC.element_to_be_clickable((By.XPATH, self.activitiesOption)))
                 self.driver.find_element(By.XPATH, self.activitiesOption).click()
             except ElementClickInterceptedException:
                 self.driver.execute_script('document.getElementsByClassName("navbar-link")[3].click()')
+            self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, self.validationForNavBarList)))
+
+    @allure.step
+    @allure.description('Select option from navbar list')
+    def select_option_from_sort_list(self):
+        pass
+
+    @allure.step
+    @allure.description('Click on sort button after select option')
+    def click_on_sort_button(self):
+        pass
 
     @allure.step
     @allure.description('Validation- category name of the option ')

@@ -190,6 +190,22 @@ class Test_User_Profile(Fixtures):
         self.test_navigate_to_restaurants(search)
         user.click_on_option_from_navbar_list('city')
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @pytest.mark.parametrize('city_name', ['Madrid'])
     def test_add_comment_correctly(self, search):
         pass
