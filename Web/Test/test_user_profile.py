@@ -1,3 +1,5 @@
+import time
+
 import allure
 from Web.Pages.Web_Page.navbar_page import NavBar
 from Web.Utils.utils import Utils
@@ -162,6 +164,8 @@ class Test_User_Profile(Fixtures):
                                 user.error_message(user.enter_date(date), 'validationMessage'),
                                 'Please select a value that is no earlier than 1902-01-01.')
 
+    @allure.description('Navigate to hotels section')
+    @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.parametrize('city_name', ['Madrid'])
     def test_navigate_to_hotels(self, search):
         driver = self.driver
@@ -169,6 +173,8 @@ class Test_User_Profile(Fixtures):
         user.click_on_option_from_navbar_list('hotels')
         Utils(driver).assertion('Hotels', user.category_name())
 
+    @allure.description('Navigate to restaurants section')
+    @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.parametrize('city_name', ['Barcelona'])
     def test_navigate_to_restaurants(self, search):
         driver = self.driver
@@ -176,6 +182,8 @@ class Test_User_Profile(Fixtures):
         user.click_on_option_from_navbar_list('restaurants')
         Utils(driver).assertion('Restaurants', user.category_name())
 
+    @allure.description('Navigate to activities section')
+    @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.parametrize('city_name', ['London'])
     def test_navigate_to_activities(self, search):
         driver = self.driver
@@ -183,6 +191,8 @@ class Test_User_Profile(Fixtures):
         user.click_on_option_from_navbar_list('activities')
         Utils(driver).assertion('Activities', user.category_name())
 
+    @allure.description('Navigate to on of the sections back to city section')
+    @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.parametrize('city_name', ['Jerusalem'])
     def test_navigate_to_city_from_another_option(self, search):
         driver = self.driver
@@ -190,24 +200,31 @@ class Test_User_Profile(Fixtures):
         self.test_navigate_to_restaurants(search)
         user.click_on_option_from_navbar_list('city')
 
+    @allure.description('Navigate to restaurants page from city slider')
+    @allure.severity(allure.severity_level.NORMAL)
+    @pytest.mark.parametrize('city_name', ['London'])
+    def test_view_all_restaurants(self, search):
+        driver = self.driver
+        user = User_Profile_Page(driver)
+        user.click_restaurants_slider()
+        Utils(driver).assertion('https://trip-yoetz.herokuapp.com/restaurants', driver.current_url)
+
+
+
+
+
+    def test_view_all_hotels(self):
+        pass
+
+    def test_view_all_activities(self):
+        pass
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-    @pytest.mark.parametrize('city_name', ['Madrid'])
-    def test_add_comment_correctly(self, search):
+    def test_add_comment_correctly(self):
         pass
 
     def test_select_items(self):

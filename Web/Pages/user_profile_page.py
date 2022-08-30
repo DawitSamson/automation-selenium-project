@@ -13,7 +13,6 @@ class User_Profile_Page:
     def __init__(self, driver: WebDriver):
         self.driver = driver
         self.wait = WebDriverWait(self.driver, 10)
-
         self.editButton = User_Profile_Locators.EDIT_PROFILE_BUTTON
         self.validationForEditButton = User_Profile_Locators.VALIDATION_FOR_EDIT_BUTTON
         self.firstNameInput = User_Profile_Locators.NAME_INPUT
@@ -34,6 +33,9 @@ class User_Profile_Page:
         self.validationForCityOption = User_Profile_Locators.VALIDATION_FOR_CITY_OPTION
         self.selectBox = User_Profile_Locators.SELECT_BOX
         self.sortButton = User_Profile_Locators.SORT_BUTTON
+        self.hotelsSlider = User_Profile_Locators.HOTELS_SLIDER
+        self.restaurantsSlider = User_Profile_Locators.RESTAURANTS_SLIDER
+        self.activitiesSlider = User_Profile_Locators.ACTIVITIES_SLIDER
 
     @allure.step
     @allure.description('Click on edit button Open the edit profile window')
@@ -142,14 +144,32 @@ class User_Profile_Page:
             self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, self.validationForNavBarList)))
 
     @allure.step
+    @allure.description('Click on sort button after select option')
+    def click_on_sort_button(self):
+        button = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, self.sortButton)))
+        button.click()
+
+
+
+    @allure.step
     @allure.description('Select option from navbar list')
-    def select_option_from_sort_list(self):
+    def select_option_from_sort_list(self, index=None, value=None):
         pass
 
     @allure.step
-    @allure.description('Click on sort button after select option')
-    def click_on_sort_button(self):
-        pass
+    @allure.description('click on view all link - should navigate to restaurants page')
+    def click_restaurants_slider(self):
+        restaurants = self.driver.find_element(By.XPATH, self.restaurantsSlider)
+        h1 = restaurants.find_element(By.TAG_NAME, 'h1')
+        a = restaurants.find_element(By.TAG_NAME, 'a')
+        Utils(self.driver).assertion('Eat', h1.get_attribute('textContent'))
+        try:
+            a.click()
+        except ElementClickInterceptedException:
+            self.driver.execute_script("document.getElementsByClassName('slider-link')[0].click()")
+        self.wait.until(EC.url_to_be('https://trip-yoetz.herokuapp.com/restaurants'))
+
+
 
     @allure.step
     @allure.description('Validation- category name of the option ')
@@ -167,6 +187,6 @@ class User_Profile_Page:
         return self.driver.find_element(By.XPATH, self.age).get_attribute('innerText')
 
     @allure.step
-    @allure.description('Validation- take th input and choose attribute(innerText, validationMessage)')
+    @allure.description('Validation- take the input and choose attribute(innerText, validationMessage)')
     def error_message(self, field: WebElement, attribute):
         return field.get_attribute(attribute)
