@@ -1,5 +1,3 @@
-import time
-
 import allure
 from Web.Pages.Web_Page.navbar_page import NavBar
 from Web.Utils.utils import Utils
@@ -9,7 +7,7 @@ import pytest
 from Web.Pages.user_profile_page import User_Profile_Page
 
 @pytest.mark.usefixtures('pre_condition')
-@pytest.mark.parametrize('browser', ['chrome'])
+@pytest.mark.parametrize('browser', ['chrome', 'firefox'])
 class Test_User_Profile(Fixtures):
 
     @allure.description('Accessibility test on about-us page clicking one color after the other')
@@ -164,77 +162,38 @@ class Test_User_Profile(Fixtures):
                                 user.error_message(user.enter_date(date), 'validationMessage'),
                                 'Please select a value that is no earlier than 1902-01-01.')
 
-    @allure.description('Navigate to hotels section')
-    @allure.severity(allure.severity_level.NORMAL)
-    @pytest.mark.parametrize('city_name', ['Madrid'])
-    def test_navigate_to_hotels(self, search):
-        driver = self.driver
-        user = User_Profile_Page(driver)
-        user.click_on_option_from_navbar_list('hotels')
-        Utils(driver).assertion('Hotels', user.category_name())
-
-    @allure.description('Navigate to restaurants section')
-    @allure.severity(allure.severity_level.NORMAL)
-    @pytest.mark.parametrize('city_name', ['Barcelona'])
-    def test_navigate_to_restaurants(self, search):
-        driver = self.driver
-        user = User_Profile_Page(driver)
-        user.click_on_option_from_navbar_list('restaurants')
-        Utils(driver).assertion('Restaurants', user.category_name())
-
-    @allure.description('Navigate to activities section')
-    @allure.severity(allure.severity_level.NORMAL)
-    @pytest.mark.parametrize('city_name', ['London'])
-    def test_navigate_to_activities(self, search):
-        driver = self.driver
-        user = User_Profile_Page(driver)
-        user.click_on_option_from_navbar_list('activities')
-        Utils(driver).assertion('Activities', user.category_name())
-
-    @allure.description('Navigate to on of the sections back to city section')
-    @allure.severity(allure.severity_level.NORMAL)
-    @pytest.mark.parametrize('city_name', ['Jerusalem'])
-    def test_navigate_to_city_from_another_option(self, search):
-        driver = self.driver
-        user = User_Profile_Page(driver)
-        self.test_navigate_to_restaurants(search)
-        user.click_on_option_from_navbar_list('city')
-
-    @allure.description('Navigate to restaurants page from city slider')
-    @allure.severity(allure.severity_level.NORMAL)
-    @pytest.mark.parametrize('city_name', ['London'])
-    def test_view_all_restaurants(self, search):
-        driver = self.driver
-        user = User_Profile_Page(driver)
-        user.click_restaurants_slider()
-        Utils(driver).assertion('https://trip-yoetz.herokuapp.com/restaurants', driver.current_url)
-
-
-
-
-
-    def test_view_all_hotels(self):
+    @allure.description('User add restaurant to favorites correctly')
+    @pytest.mark.sanity
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_add_to_favorites_1(self):
         pass
 
-    def test_view_all_activities(self):
+    @allure.description('User add hotel to favorites correctly')
+    @pytest.mark.sanity
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_add_to_favorites_2(self):
         pass
 
-
-
-
-
-
-    def test_add_comment_correctly(self):
+    @allure.description('User add activity to favorites correctly')
+    @pytest.mark.sanity
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_add_to_favorites_3(self):
         pass
 
-    def test_select_items(self):
+    @allure.description('User remove restaurant from favorites correctly')
+    @pytest.mark.sanity
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_remove_from_favorites_1(self):
         pass
 
-    def test_add_question_(self):
+    @allure.description('User remove hotel from favorites correctly')
+    @pytest.mark.sanity
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_remove_from_favorites_2(self):
         pass
 
-    def test_add_rating(self):
-        pass
-
-    def test_view_all(self):
+    @allure.description('User remove activity from favorites correctly')
+    @pytest.mark.sanity
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_remove_from_favorites_3(self):
         pass
