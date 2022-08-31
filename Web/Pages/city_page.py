@@ -93,16 +93,43 @@ class City_Page(User_Profile_Page):
             self.driver.execute_script("document.getElementsByClassName('slider-link')[2].click()")
         self.wait.until(EC.url_to_be('https://trip-yoetz.herokuapp.com/activities'))
 
+
+
+
+
+    ''' work on buttons '''
+
+
     @allure.step
     @allure.description('click on next image button')
     def click_next_image_button_eat(self):
-        prev_button = self.driver.find_element(By.XPATH, self.prevImageButtonEat)
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, self.nextImageButtonEat)))
         next_button = self.driver.find_element(By.XPATH, self.nextImageButtonEat)
         try:
             next_button.click()
         except ElementClickInterceptedException:
-            self.driver.execute_script(f'$x({self.nextImageButtonEat}[0].click())')
-        Utils(self.driver).assertion(False, prev_button.get_attribute('disabled'))
+            self.driver.execute_script("document.getElementsByClassName('next-img-btn')[0].click()")
+        return next_button.get_attribute('disabled')
+
+    @allure.step
+    @allure.description('click on previous image button')
+    def click_prev_image_button_eat(self):
+        self.wait.until(EC.visibility_of_element_located((By.XPATH, self.prevImageButtonEat)))
+        prev_button = self.driver.find_element(By.XPATH, self.prevImageButtonEat)
+        try:
+            prev_button.click()
+        except ElementClickInterceptedException:
+            self.driver.execute_script("document.getElementsByClassName('prev-img-btn')[0].click()")
+        return prev_button.get_attribute('disabled')
+
+
+
+
+
+
+
+
+
 
     @allure.step
     @allure.description('Validation- city name')

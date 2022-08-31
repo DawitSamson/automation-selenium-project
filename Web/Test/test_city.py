@@ -1,3 +1,5 @@
+import time
+
 from Web.coftest import Fixtures
 import allure
 import pytest
@@ -72,3 +74,12 @@ class Test_City(Fixtures):
         user = City_Page(driver)
         user.click_activities_slider()
         Utils(driver).assertion('https://trip-yoetz.herokuapp.com/activities', driver.current_url)
+
+    ''' work on buttons tests '''
+    @pytest.mark.parametrize('city_name', ['London'])
+    def test_click_on_next_image(self):
+        driver = self.driver
+        city = City_Page(driver)
+        city.click_next_image_button_eat()
+        assert city.click_prev_image_button_eat() == 'false'
+
