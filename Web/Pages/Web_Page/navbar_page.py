@@ -3,7 +3,7 @@
 import allure
 from Web.Utils.utils import Utils
 from selenium.webdriver.chrome.webdriver import WebDriver
-from Web.Locators.Web_Locators.locators_navbar import Web_Locators
+from Web.Locators.Web_Locators.locators_navbar import NavBar_Locators
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
@@ -11,10 +11,10 @@ from selenium.webdriver.common.keys import Keys
 class NavBar:
     def __init__(self, driver: WebDriver):
         self.driver = driver
-        self.searchField = Web_Locators.SEARCH_FIELD
-        self.cityNameCorrectly = Web_Locators.CITY_NAME
-        self.cityNameIncorrectly = Web_Locators.CITY_ERROR_MESSAGE
-        self.navBarLinks = Web_Locators.NAV_BAR_LINKS
+        self.searchField = NavBar_Locators.SEARCH_FIELD
+        self.cityNameCorrectly = NavBar_Locators.CITY_NAME
+        self.cityNameIncorrectly = NavBar_Locators.CITY_ERROR_MESSAGE
+        self.navBarLinks = NavBar_Locators.NAV_BAR_LINKS
 
     @allure.step
     @allure.description('The search method that included valid and invalid search')
