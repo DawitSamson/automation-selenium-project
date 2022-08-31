@@ -8,3 +8,6 @@ class City_Locators:
     RESTAURANTS_SLIDER = '//section[1]/div[1]/div[1]'
     HOTELS_SLIDER = '//section[1]/div[2]/div[1]'
     ACTIVITIES_SLIDER = ' //section[1]/div[3]/div[1]'
+
+    NEXT_IMAGE_BUTTON_EAT = '//section[1]/div[1]/button[1]'
+    PREV_IMAGE_BUTTON_EAT = '//section[1]/div[1]/button[2]'

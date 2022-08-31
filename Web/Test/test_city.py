@@ -21,7 +21,7 @@ class Test_City(Fixtures):
     @allure.description('Navigate to restaurants section')
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.parametrize('city_name', ['Barcelona'])
-    def test_navigate_to_restaurants(self, search):
+    def test_navigate_to_restaurants(self):
         driver = self.driver
         city = City_Page(driver)
         city.click_on_option_from_navbar_list('restaurants')
@@ -30,7 +30,7 @@ class Test_City(Fixtures):
     @allure.description('Navigate to activities section')
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.parametrize('city_name', ['London'])
-    def test_navigate_to_activities(self, search):
+    def test_navigate_to_activities(self):
         driver = self.driver
         city = City_Page(driver)
         city.click_on_option_from_navbar_list('activities')
@@ -49,7 +49,7 @@ class Test_City(Fixtures):
     @allure.description('Navigate to restaurants page from city slider')
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.parametrize('city_name', ['London'])
-    def test_view_all_restaurants(self, search):
+    def test_view_all_restaurants(self):
         driver = self.driver
         user = City_Page(driver)
         user.click_restaurants_slider()
@@ -58,7 +58,7 @@ class Test_City(Fixtures):
     @allure.description('Navigate to hotels page from city slider')
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.parametrize('city_name', ['London'])
-    def test_view_all_hotels(self, search):
+    def test_view_all_hotels(self):
         driver = self.driver
         user = City_Page(driver)
         user.click_hotels_slider()
@@ -67,7 +67,7 @@ class Test_City(Fixtures):
     @allure.description('Navigate to activities page from city slider')
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.parametrize('city_name', ['London'])
-    def test_view_all_activities(self, search):
+    def test_view_all_activities(self):
         driver = self.driver
         user = City_Page(driver)
         user.click_activities_slider()

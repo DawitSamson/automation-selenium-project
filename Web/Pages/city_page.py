@@ -19,6 +19,8 @@ class City_Page(User_Profile_Page):
         self.hotelsSlider = City_Locators.HOTELS_SLIDER
         self.restaurantsSlider = City_Locators.RESTAURANTS_SLIDER
         self.activitiesSlider = City_Locators.ACTIVITIES_SLIDER
+        self.nextImageButtonEat = City_Locators.NEXT_IMAGE_BUTTON_EAT
+        self.prevImageButtonEat = City_Locators.PREV_IMAGE_BUTTON_EAT
 
     @allure.step
     @allure.description('Clicking on option from navbar list and handle element interrupted error')
@@ -90,6 +92,17 @@ class City_Page(User_Profile_Page):
         except ElementClickInterceptedException:
             self.driver.execute_script("document.getElementsByClassName('slider-link')[2].click()")
         self.wait.until(EC.url_to_be('https://trip-yoetz.herokuapp.com/activities'))
+
+    @allure.step
+    @allure.description('click on next image button')
+    def click_next_image_button_eat(self):
+        prev_button = self.driver.find_element(By.XPATH, self.prevImageButtonEat)
+        next_button = self.driver.find_element(By.XPATH, self.nextImageButtonEat)
+        try:
+            next_button.click()
+        except ElementClickInterceptedException:
+            self.driver.execute_script(f'$x({self.nextImageButtonEat}[0].click())')
+        Utils(self.driver).assertion(False, prev_button.get_attribute('disabled'))
 
     @allure.step
     @allure.description('Validation- city name')
