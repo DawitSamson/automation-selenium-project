@@ -1,3 +1,4 @@
+from selenium.webdriver.common.by import By
 
 class Footer_Locators:
-    pass
+    OPENING_FOOTER_BUTTON = (By.CSS_SELECTOR, 'button[class="open-footer-btn"]')
