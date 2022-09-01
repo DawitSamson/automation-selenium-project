@@ -1,3 +1,5 @@
+import random
+
 import allure
 from Web.Locators.locators_city import City_Locators
 from Web.Pages.user_profile_page import User_Profile_Page
@@ -10,133 +12,131 @@ from selenium.common.exceptions import ElementClickInterceptedException
 class City_Page(User_Profile_Page):
     def __init__(self, driver):
         User_Profile_Page.__init__(self, driver)
-        self.cityOption = City_Locators.CITY_OPTION
-        self.hotelsOption = City_Locators.HOTELS_OPTION
-        self.restaurantsOption = City_Locators.RESTAURANTS_OPTION
-        self.activitiesOption = City_Locators.ACTIVITIES_OPTION
-        self.validationForNavBarList = City_Locators.VALIDATION_FOR_NAVBAR_LIST_OPTION
-        self.validationForCityOption = City_Locators.VALIDATION_FOR_CITY_OPTION
-        self.hotelsSlider = City_Locators.HOTELS_SLIDER
-        self.restaurantsSlider = City_Locators.RESTAURANTS_SLIDER
-        self.activitiesSlider = City_Locators.ACTIVITIES_SLIDER
-        self.nextImageButtonEat = City_Locators.NEXT_IMAGE_BUTTON_EAT
-        self.prevImageButtonEat = City_Locators.PREV_IMAGE_BUTTON_EAT
+        self.cityNavBar = City_Locators.CITY_NAV_BAR
+        self.validationForCityNavBar = City_Locators.CITY_NAME_H1
+        self.hotelsNavBar = City_Locators.HOTELS_NAV_BAR
+        self.restaurantsNavBar = City_Locators.RESTAURANTS_NAV_BAR
+        self.activitiesNavBar = City_Locators.ACTIVITIES_NAV_BAR
+        self.validationForRestNavBar = City_Locators.CATEGORY_NAME
 
-    @allure.step
-    @allure.description('Clicking on option from navbar list and handle element interrupted error')
-    def click_on_option_from_navbar_list(self, option_name):
-        if option_name == 'city':
-            option = self.wait.until(EC.element_to_be_clickable((By.XPATH, self.cityOption)))
-            try:
-                option.click()
-            except ElementClickInterceptedException:
-                self.driver.execute_script('document.getElementsByClassName("navbar-link")[0].click()')
-            self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, self.validationForCityOption)))
-        elif option_name == 'hotels':
-            try:
-                self.wait.until(EC.element_to_be_clickable((By.XPATH, self.hotelsOption)))
-                self.driver.find_element(By.XPATH, self.hotelsOption).click()
-            except ElementClickInterceptedException:
-                self.driver.execute_script('document.getElementsByClassName("navbar-link")[1].click()')
-            self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, self.validationForNavBarList)))
-        elif option_name == 'restaurants':
-            try:
-                self.wait.until(EC.element_to_be_clickable((By.XPATH, self.restaurantsOption)))
-                self.driver.find_element(By.XPATH, self.restaurantsOption).click()
-            except ElementClickInterceptedException:
-                self.driver.execute_script('document.getElementsByClassName("navbar-link")[2].click()')
-            self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, self.validationForNavBarList)))
-        elif option_name == 'activities':
-            try:
-                self.wait.until(EC.element_to_be_clickable((By.XPATH, self.activitiesOption)))
-                self.driver.find_element(By.XPATH, self.activitiesOption).click()
-            except ElementClickInterceptedException:
-                self.driver.execute_script('document.getElementsByClassName("navbar-link")[3].click()')
-            self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, self.validationForNavBarList)))
+        self.restaurantsMain = City_Locators.RESTAURANTS_MAIN_DIV
+        self.hotelsMain = City_Locators.HOTELS_MAIN_DIV
+        self.activitiesMain = City_Locators.ACTIVITIES_MAIN_DIV
 
-    @allure.step
-    @allure.description('click on view all link - should navigate to restaurants page')
-    def click_restaurants_slider(self):
-        restaurants = self.driver.find_element(By.XPATH, self.restaurantsSlider)
-        h1 = restaurants.find_element(By.TAG_NAME, 'h1')
-        a = restaurants.find_element(By.TAG_NAME, 'a')
-        Utils(self.driver).assertion('Eat', h1.get_attribute('textContent'))
+    def city_name(self):
+        return self.driver.find_element(By.CSS_SELECTOR, self.validationForCityNavBar).get_attribute('textContent')
+
+    def category_name(self):
+        return self.driver.find_element(By.CSS_SELECTOR, self.validationForRestNavBar).get_attribute('textContent')
+
+    def navigate_to_hotels_nav_bar(self):
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, self.hotelsNavBar)))
         try:
-            a.click()
+            self.driver.find_element(By.XPATH, self.hotelsNavBar).click()
+        except ElementClickInterceptedException:
+            self.driver.execute_script("document.getElementsByClassName('navbar-link')[1].click()")
+        Utils(self.driver).assertion('Hotels', self.category_name())
+
+    def navigate_to_restaurants_nav_bar(self):
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, self.restaurantsNavBar)))
+        try:
+            self.driver.find_element(By.XPATH, self.restaurantsNavBar).click()
+        except ElementClickInterceptedException:
+            self.driver.execute_script("document.getElementsByClassName('navbar-link')[2].click()")
+        Utils(self.driver).assertion('Restaurants', self.category_name())
+
+    def navigate_to_activities_nav_bar(self):
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, self.activitiesNavBar)))
+        try:
+            self.driver.find_element(By.XPATH, self.activitiesNavBar).click()
+        except ElementClickInterceptedException:
+            self.driver.execute_script("document.getElementsByClassName('navbar-link')[3].click()")
+        Utils(self.driver).assertion('Activities', self.category_name())
+
+    def navigate_to_city_nav_bar(self):
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, self.cityNavBar)))
+        try:
+            self.driver.find_element(By.XPATH, self.cityNavBar).click()
+        except ElementClickInterceptedException:
+            self.driver.execute_script("document.getElementsByClassName('navbar-link')[0].click()")
+        self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, self.validationForCityNavBar)))
+
+    def view_all_restaurants(self):
+        div = self.driver.find_element(By.XPATH, self.restaurantsMain)
+        link = div.find_element(By.CLASS_NAME, 'slider-link')
+        try:
+            link.click()
         except ElementClickInterceptedException:
             self.driver.execute_script("document.getElementsByClassName('slider-link')[0].click()")
-        self.wait.until(EC.url_to_be('https://trip-yoetz.herokuapp.com/restaurants'))
+            self.wait.until(EC.url_to_be("https://trip-yoetz.herokuapp.com/restaurants"))
 
-    @allure.step
-    @allure.description('click on view all link - should navigate to hotels page')
-    def click_hotels_slider(self):
-        restaurants = self.driver.find_element(By.XPATH, self.hotelsSlider)
-        h1 = restaurants.find_element(By.TAG_NAME, 'h1')
-        a = restaurants.find_element(By.TAG_NAME, 'a')
-        Utils(self.driver).assertion('Stay', h1.get_attribute('textContent'))
+    def view_all_hotels(self):
+        div = self.driver.find_element(By.XPATH, self.hotelsMain)
+        link = div.find_element(By.CLASS_NAME, 'slider-link')
         try:
-            a.click()
-        except ElementClickInterceptedException:
-            self.driver.execute_script("document.getElementsByClassName('slider-link')[1].click()")
-        self.wait.until(EC.url_to_be('https://trip-yoetz.herokuapp.com/hotels'))
-
-    @allure.step
-    @allure.description('click on view all link - should navigate to activities page')
-    def click_activities_slider(self):
-        restaurants = self.driver.find_element(By.XPATH, self.activitiesSlider)
-        h1 = restaurants.find_element(By.TAG_NAME, 'h1')
-        a = restaurants.find_element(By.TAG_NAME, 'a')
-        Utils(self.driver).assertion('Do', h1.get_attribute('textContent'))
-        try:
-            a.click()
+            link.click()
         except ElementClickInterceptedException:
             self.driver.execute_script("document.getElementsByClassName('slider-link')[2].click()")
-        self.wait.until(EC.url_to_be('https://trip-yoetz.herokuapp.com/activities'))
+            self.wait.until(EC.url_to_be("https://trip-yoetz.herokuapp.com/hotels"))
 
-
-
-
-
-    ''' work on buttons '''
-
-
-    @allure.step
-    @allure.description('click on next image button')
-    def click_next_image_button_eat(self):
-        self.wait.until(EC.visibility_of_element_located((By.XPATH, self.nextImageButtonEat)))
-        next_button = self.driver.find_element(By.XPATH, self.nextImageButtonEat)
+    def view_all_activities(self):
+        div = self.driver.find_element(By.XPATH, self.activitiesMain)
+        link = div.find_element(By.CLASS_NAME, 'slider-link')
         try:
-            next_button.click()
+            link.click()
         except ElementClickInterceptedException:
-            self.driver.execute_script("document.getElementsByClassName('next-img-btn')[0].click()")
-        return next_button.get_attribute('disabled')
+            self.driver.execute_script("document.getElementsByClassName('slider-link')[4].click()")
+            self.wait.until(EC.url_to_be("https://trip-yoetz.herokuapp.com/activities"))
 
-    @allure.step
-    @allure.description('click on previous image button')
-    def click_prev_image_button_eat(self):
-        self.wait.until(EC.visibility_of_element_located((By.XPATH, self.prevImageButtonEat)))
-        prev_button = self.driver.find_element(By.XPATH, self.prevImageButtonEat)
+    def click_next_image_button_restaurants(self):
+        div = self.driver.find_element(By.XPATH, self.restaurantsMain)
+        button = div.find_element(By.CLASS_NAME, 'next-img-btn')
         try:
-            prev_button.click()
+            button.click()
         except ElementClickInterceptedException:
-            self.driver.execute_script("document.getElementsByClassName('prev-img-btn')[0].click()")
-        return prev_button.get_attribute('disabled')
+            self.driver.execute_script("document.getElementsByClassName('next-img-btn')[0]")
 
+    def click_prev_image_button_restaurants(self):
+        div = self.driver.find_element(By.XPATH, self.restaurantsMain)
+        button = div.find_element(By.CLASS_NAME, 'prev-img-btn')
+        try:
+            button.click()
+        except ElementClickInterceptedException:
+            self.driver.execute_script("document.getElementsByClassName('prev-img-btn')[0]")
 
+    def click_next_image_button_hotels(self):
+        div = self.driver.find_element(By.XPATH, self.hotelsMain)
+        button = div.find_element(By.CLASS_NAME, 'next-img-btn')
+        try:
+            button.click()
+        except ElementClickInterceptedException:
+            self.driver.execute_script("document.getElementsByClassName('next-img-btn')[1]")
 
+    def click_prev_image_button_hotels(self):
+        div = self.driver.find_element(By.XPATH, self.hotelsMain)
+        button = div.find_element(By.CLASS_NAME, 'prev-img-btn')
+        try:
+            button.click()
+        except ElementClickInterceptedException:
+            self.driver.execute_script("document.getElementsByClassName('prev-img-btn')[1]")
 
+    def click_next_image_button_activities(self):
+        div = self.driver.find_element(By.XPATH, self.activitiesMain)
+        button = div.find_element(By.CLASS_NAME, 'next-img-btn')
+        try:
+            button.click()
+        except ElementClickInterceptedException:
+            self.driver.execute_script("document.getElementsByClassName('next-img-btn')[2]")
 
+    def click_prev_image_button_activities(self):
+        div = self.driver.find_element(By.XPATH, self.activitiesMain)
+        button = div.find_element(By.CLASS_NAME, 'prev-img-btn')
+        try:
+            button.click()
+        except ElementClickInterceptedException:
+            self.driver.execute_script("document.getElementsByClassName('prev-img-btn')[2]")
 
+    def restaurant_images(self):
+        div = self.driver.find_element(By.XPATH, self.restaurantsMain)
+        images = div.find_elements(By.CLASS_NAME, 'slider-card')
 
-
-
-
-    @allure.step
-    @allure.description('Validation- city name')
-    def city_name(self):
-        return self.driver.find_element(By.CSS_SELECTOR, self.validationForCityOption).get_attribute('textContent')
-
-    @allure.step
-    @allure.description('Validation- category name of the option ')
-    def category_name(self):
-        return self.driver.find_element(By.CSS_SELECTOR, self.validationForNavBarList).get_attribute('textContent')

@@ -1,4 +1,5 @@
 import allure
+from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
@@ -77,7 +78,10 @@ class User_Profile_Page:
     @allure.step
     @allure.description('Click on log out button and exit from account')
     def click_on_log_out_button(self):
-        self.driver.find_element(By.CSS_SELECTOR, self.logOutButton).click()
+        try:
+            self.driver.find_element(By.CSS_SELECTOR, self.logOutButton).click()
+        except ElementClickInterceptedException:
+            self.driver.execute_script("document.getElementsByClassName('logout-btn')[0].click()")
         alert = self.driver.switch_to.alert
         for i in range(2):
             alert.accept()
