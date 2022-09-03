@@ -12,4 +12,7 @@ class Test_City(Fixtures):
 
     @pytest.mark.parametrize('city_name', ['London'])
     def test_1(self):
-        pass
+        driver = self.driver
+        city = City_Page(driver)
+        restaurants_names = ['', '', '', '', '', '']
+        city.restaurant_images()

@@ -1,4 +1,5 @@
 import random
+import time
 
 import allure
 from Web.Locators.locators_city import City_Locators
@@ -138,5 +139,13 @@ class City_Page(User_Profile_Page):
 
     def restaurant_images(self):
         div = self.driver.find_element(By.XPATH, self.restaurantsMain)
+        images = div.find_elements(By.CLASS_NAME, 'slider-card')
+
+    def hotels_images(self):
+        div = self.driver.find_element(By.XPATH, self.hotelsMain)
+        images = div.find_elements(By.CLASS_NAME, 'slider-card')
+
+    def activities_images(self):
+        div = self.driver.find_element(By.XPATH, self.activitiesMain)
         images = div.find_elements(By.CLASS_NAME, 'slider-card')
 
