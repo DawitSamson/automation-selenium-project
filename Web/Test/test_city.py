@@ -14,5 +14,4 @@ class Test_City(Fixtures):
     def test_1(self):
         driver = self.driver
         city = City_Page(driver)
-        restaurants_names = ['', '', '', '', '', '']
         city.restaurant_images()

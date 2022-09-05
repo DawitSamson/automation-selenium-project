@@ -1,6 +1,6 @@
 import allure
 from selenium.webdriver.chrome.webdriver import WebDriver
-from Web.Locators.locators_login_page import Locators_Login_Page
+from Web.Locators.locators_login import Locators_Login_Page
 from selenium.webdriver.common.by import By
 from Web.Utils.utils import Utils
 from selenium.webdriver.support.wait import WebDriverWait
