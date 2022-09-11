@@ -1,12 +1,10 @@
 import allure
 import pytest
 from Web.Pages.register_page import Register_Page
-from Web.Base.base import Base
 from Web.Utils.utils import Utils
-from Web.coftest import Fixtures
+from Web.Test.conftest import Web_Fixtures
 
-@pytest.mark.parametrize('browser', ['chrome', 'firefox'])
-class Test_Register(Fixtures, Base):
+class Test_Register(Web_Fixtures):
 
     @allure.description('Navigate to login page correctly')
     @allure.severity(allure.severity_level.MINOR)

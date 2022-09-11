@@ -1,21 +1,17 @@
 import allure
 import pytest
 from Web.Pages.Web_Page.accessibility_page import Accessibility_Page
-from Web.Base.base import Base
 from Web.Pages.login_page import Login_Page
 from Web.Utils.utils import Utils
-from Web.coftest import Fixtures
+from Web.Test.conftest import Web_Fixtures
 from Web.Pages.Web_Page.navbar_page import NavBar
 
-@pytest.mark.usefixtures('set_up')
-@pytest.mark.parametrize('browser', ['chrome', 'firefox'])
-class Test_Login(Fixtures, Base):
+class Test_Login(Web_Fixtures):
 
     @allure.description('Login successfully, this is the PreCondition for user profile tests')
     @allure.severity(allure.severity_level.CRITICAL)
     @pytest.mark.sanity
-    @pytest.mark.usefixtures('pre_condition')
-    def test_login_successfully(self):
+    def test_login_successfully(self, pre_condition):
         pass
 
     @allure.description('Login when the values in the fields are invalid')

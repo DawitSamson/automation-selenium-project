@@ -2,13 +2,12 @@ import allure
 from Web.Pages.Web_Page.navbar_page import NavBar
 from Web.Utils.utils import Utils
 from Web.Pages.Web_Page.accessibility_page import Accessibility_Page
-from Web.coftest import Fixtures
+from Web.Test.conftest import Web_Fixtures
 import pytest
 from Web.Pages.user_profile_page import User_Profile_Page
 
 @pytest.mark.usefixtures('pre_condition')
-@pytest.mark.parametrize('browser', ['chrome', 'firefox'])
-class Test_User_Profile(Fixtures):
+class Test_User_Profile(Web_Fixtures):
 
     @allure.description('Accessibility test on about-us page clicking one color after the other')
     @allure.severity(allure.severity_level.NORMAL)

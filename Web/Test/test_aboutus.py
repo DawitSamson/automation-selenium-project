@@ -2,14 +2,11 @@ import allure
 import pytest
 from Web.Utils.utils import Utils
 from Web.Pages.aboutus_page import AboutUs_Page
-from Web.Base.base import Base
-from Web.coftest import Fixtures
+from Web.Test.conftest import Web_Fixtures
 from Web.Pages.Web_Page.accessibility_page import Accessibility_Page
 from Web.Pages.Web_Page.navbar_page import NavBar
 
-@pytest.mark.usefixtures('set_up')
-@pytest.mark.parametrize('browser', ['chrome', 'firefox'])
-class Test_AboutUs(Fixtures, Base):
+class Test_AboutUs(Web_Fixtures):
 
     @allure.description('Verify all the user interface in the page ')
     @allure.severity(allure.severity_level.NORMAL)
