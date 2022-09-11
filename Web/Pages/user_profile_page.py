@@ -28,13 +28,13 @@ class User_Profile_Page:
     @allure.step
     @allure.description('Click on edit button Open the edit profile window')
     def click_on_edit_profile_button(self):
-        self.driver.find_element(By.CSS_SELECTOR, self.editButton).click()
+        self.driver.find_element(*self.editButton).click()
         self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, self.validationForEditButton)))
 
     @allure.step
     @allure.description('Insert first name value to the first name input')
     def enter_first_name(self, first_name: str):
-        first_name_input = self.driver.find_element(By.CSS_SELECTOR, self.firstNameInput)
+        first_name_input = self.driver.find_element(*self.firstNameInput)
         first_name_input.clear()
         first_name_input.send_keys(first_name)
         Utils(self.driver).assertion(first_name, first_name_input.get_attribute('value'))
@@ -43,7 +43,7 @@ class User_Profile_Page:
     @allure.step
     @allure.description('Insert last name value to the last name input')
     def enter_last_name(self, last_name: str):
-        last_name_input = self.driver.find_element(By.CSS_SELECTOR, self.lastNameInput)
+        last_name_input = self.driver.find_element(*self.lastNameInput)
         last_name_input.clear()
         last_name_input.send_keys(last_name)
         Utils(self.driver).assertion(last_name, last_name_input.get_attribute('value'))
@@ -52,7 +52,7 @@ class User_Profile_Page:
     @allure.step
     @allure.description('Insert email value to the email input')
     def enter_email(self, email: str):
-        email_input = self.driver.find_element(By.CSS_SELECTOR, self.emailInput)
+        email_input = self.driver.find_element(*self.emailInput)
         email_input.clear()
         email_input.send_keys(email)
         Utils(self.driver).assertion(email, email_input.get_attribute('value'))
@@ -61,7 +61,7 @@ class User_Profile_Page:
     @allure.step
     @allure.description('Insert image value to the image input')
     def enter_image_name(self, image: str):
-        image_input = self.driver.find_element(By.CSS_SELECTOR, self.imageInput)
+        image_input = self.driver.find_element(*self.imageInput)
         image_input.clear()
         image_input.send_keys(image)
         Utils(self.driver).assertion(image, image_input.get_attribute('value'))
@@ -70,7 +70,7 @@ class User_Profile_Page:
     @allure.step
     @allure.description('Insert birth date value to the birth date input, using in execute_script')
     def enter_date(self, date: str):
-        birth_date_input = self.driver.find_element(By.CSS_SELECTOR, self.birthDateInput)
+        birth_date_input = self.driver.find_element(*self.birthDateInput)
         self.driver.execute_script(f"document.getElementsByName('birthDate')[0].value = '{date}'")
         Utils(self.driver).assertion(date, birth_date_input.get_attribute('value'))
         return birth_date_input
@@ -79,7 +79,7 @@ class User_Profile_Page:
     @allure.description('Click on log out button and exit from account')
     def click_on_log_out_button(self):
         try:
-            self.driver.find_element(By.CSS_SELECTOR, self.logOutButton).click()
+            self.driver.find_element(*self.logOutButton).click()
         except ElementClickInterceptedException:
             self.driver.execute_script("document.getElementsByClassName('logout-btn')[0].click()")
         alert = self.driver.switch_to.alert
@@ -90,7 +90,7 @@ class User_Profile_Page:
     @allure.step
     @allure.description('Click on update button after sending values to the inputs')
     def click_on_update_button(self):
-        self.driver.find_element(By.XPATH, self.updateButton).click()
+        self.driver.find_element(*self.updateButton).click()
 
     @allure.step
     @allure.description('Update profile - insert values and click update button')
@@ -105,12 +105,12 @@ class User_Profile_Page:
     @allure.step
     @allure.description('Validation- full name value')
     def full_name_value(self):
-        return self.driver.find_element(By.XPATH, self.fullName).get_attribute('innerText')
+        return self.driver.find_element(*self.fullName).get_attribute('innerText')
 
     @allure.step
     @allure.description('Validation- age value')
     def age_value(self):
-        return self.driver.find_element(By.XPATH, self.age).get_attribute('innerText')
+        return self.driver.find_element(*self.age).get_attribute('innerText')
 
     @allure.step
     @allure.description('Validation- take the input and choose attribute(innerText, validationMessage)')

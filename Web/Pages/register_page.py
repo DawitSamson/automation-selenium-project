@@ -32,13 +32,13 @@ class Register_Page(User_Profile_Page, Login_Page):
     @allure.step
     @allure.description('clicking on login button - should navigate to login page')
     def click_on_login_link(self):
-        self.driver.find_element(By.CSS_SELECTOR, self.loginLink).click()
+        self.driver.find_element(*self.loginLink).click()
         self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, self.loginValidation)))
 
     @allure.step
     @allure.description('insert value to "password" input')
     def enter_password(self, password):
-        field = self.driver.find_element(By.XPATH, self.passwordInput)
+        field = self.driver.find_element(*self.passwordInput)
         field.clear()
         field.send_keys(password)
         Utils(self.driver).assertion(password, field.get_attribute('value'))
@@ -47,7 +47,7 @@ class Register_Page(User_Profile_Page, Login_Page):
     @allure.step
     @allure.description('insert value to "confirm password" input')
     def enter_confirm_password(self, password):
-        field = self.driver.find_element(By.XPATH, self.confirmPassword)
+        field = self.driver.find_element(*self.confirmPassword)
         field.clear()
         field.send_keys(password)
         Utils(self.driver).assertion(password, field.get_attribute('value'))
@@ -56,17 +56,17 @@ class Register_Page(User_Profile_Page, Login_Page):
     @allure.step
     @allure.description('clicking on register button')
     def click_on_register_button(self):
-        self.driver.find_element(By.CSS_SELECTOR, self.registerButton).click()
+        self.driver.find_element(*self.registerButton).click()
 
     @allure.step
     @allure.description('Validation- error message when passwords not matching')
     def password_not_matching_error(self):
-        return self.driver.find_element(By.XPATH, self.passwordsNotMatchError).get_attribute('textContent')
+        return self.driver.find_element(*self.passwordsNotMatchError).get_attribute('textContent')
 
     @allure.step
     @allure.description('Validation- error message when user that already exist trying to register')
     def user_already_exist_error(self):
-        return self.driver.find_element(By.XPATH, self.userExistError).get_attribute('textContent')
+        return self.driver.find_element(*self.userExistError).get_attribute('textContent')
 
     def enter_register_values(self, f_name, l_name, birth_date, email, image, password1, password2):
         self.enter_first_name(f_name)
