@@ -23,17 +23,17 @@ class City_Page(User_Profile_Page):
 
     @allure.step
     def city_name(self):
-        return self.driver.find_element(*self.validationForCityNavBar).get_attribute('textContent')
+        return self.driver.find_element(By.CSS_SELECTOR, self.validationForCityNavBar).get_attribute('textContent')
 
     @allure.step
     def category_name(self):
-        return self.driver.find_element(*self.validationForRestNavBar).get_attribute('textContent')
+        return self.driver.find_element(By.CSS_SELECTOR, self.validationForRestNavBar).get_attribute('textContent')
 
     @allure.step
     def navigate_to_hotels_nav_bar(self):
         self.wait.until(EC.element_to_be_clickable((By.XPATH, self.hotelsNavBar)))
         try:
-            self.driver.find_element(*self.hotelsNavBar).click()
+            self.driver.find_element(By.XPATH, self.hotelsNavBar).click()
         except ElementClickInterceptedException:
             self.driver.execute_script("document.getElementsByClassName('navbar-link')[1].click()")
         Utils(self.driver).assertion('Hotels', self.category_name())
@@ -42,7 +42,7 @@ class City_Page(User_Profile_Page):
     def navigate_to_restaurants_nav_bar(self):
         self.wait.until(EC.element_to_be_clickable((By.XPATH, self.restaurantsNavBar)))
         try:
-            self.driver.find_element(*self.restaurantsNavBar).click()
+            self.driver.find_element(By.XPATH, self.restaurantsNavBar).click()
         except ElementClickInterceptedException:
             self.driver.execute_script("document.getElementsByClassName('navbar-link')[2].click()")
         Utils(self.driver).assertion('Restaurants', self.category_name())
@@ -51,7 +51,7 @@ class City_Page(User_Profile_Page):
     def navigate_to_activities_nav_bar(self):
         self.wait.until(EC.element_to_be_clickable((By.XPATH, self.activitiesNavBar)))
         try:
-            self.driver.find_element(*self.activitiesNavBar).click()
+            self.driver.find_element(By.XPATH, self.activitiesNavBar).click()
         except ElementClickInterceptedException:
             self.driver.execute_script("document.getElementsByClassName('navbar-link')[3].click()")
         Utils(self.driver).assertion('Activities', self.category_name())
@@ -60,14 +60,14 @@ class City_Page(User_Profile_Page):
     def navigate_to_city_nav_bar(self):
         self.wait.until(EC.element_to_be_clickable((By.XPATH, self.cityNavBar)))
         try:
-            self.driver.find_element(*self.cityNavBar).click()
+            self.driver.find_element(By.XPATH, self.cityNavBar).click()
         except ElementClickInterceptedException:
             self.driver.execute_script("document.getElementsByClassName('navbar-link')[0].click()")
         self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, self.validationForCityNavBar)))
 
     @allure.step
     def view_all_restaurants(self):
-        div = self.driver.find_element(*self.restaurantsMain)
+        div = self.driver.find_element(By.XPATH, self.restaurantsMain)
         link = div.find_element(By.CLASS_NAME, 'slider-link')
         try:
             link.click()
@@ -77,7 +77,7 @@ class City_Page(User_Profile_Page):
 
     @allure.step
     def view_all_hotels(self):
-        div = self.driver.find_element(*self.hotelsMain)
+        div = self.driver.find_element(By.XPATH, self.hotelsMain)
         link = div.find_element(By.CLASS_NAME, 'slider-link')
         try:
             link.click()
@@ -87,7 +87,7 @@ class City_Page(User_Profile_Page):
 
     @allure.step
     def view_all_activities(self):
-        div = self.driver.find_element(*self.activitiesMain)
+        div = self.driver.find_element(By.XPATH, self.activitiesMain)
         link = div.find_element(By.CLASS_NAME, 'slider-link')
         try:
             link.click()
@@ -97,7 +97,7 @@ class City_Page(User_Profile_Page):
 
     @allure.step
     def click_next_image_button_restaurants(self):
-        div = self.driver.find_element(*self.restaurantsMain)
+        div = self.driver.find_element(By.XPATH, self.restaurantsMain)
         button = div.find_element(By.CLASS_NAME, 'next-img-btn')
         try:
             button.click()
@@ -106,7 +106,7 @@ class City_Page(User_Profile_Page):
 
     @allure.step
     def click_prev_image_button_restaurants(self):
-        div = self.driver.find_element(*self.restaurantsMain)
+        div = self.driver.find_element(By.XPATH, self.restaurantsMain)
         button = div.find_element(By.CLASS_NAME, 'prev-img-btn')
         try:
             button.click()
@@ -115,7 +115,7 @@ class City_Page(User_Profile_Page):
 
     @allure.step
     def click_next_image_button_hotels(self):
-        div = self.driver.find_element(*self.hotelsMain)
+        div = self.driver.find_element(By.XPATH, self.hotelsMain)
         button = div.find_element(By.CLASS_NAME, 'next-img-btn')
         try:
             button.click()
@@ -124,7 +124,7 @@ class City_Page(User_Profile_Page):
 
     @allure.step
     def click_prev_image_button_hotels(self):
-        div = self.driver.find_element(*self.hotelsMain)
+        div = self.driver.find_element(By.XPATH, self.hotelsMain)
         button = div.find_element(By.CLASS_NAME, 'prev-img-btn')
         try:
             button.click()
@@ -133,7 +133,7 @@ class City_Page(User_Profile_Page):
 
     @allure.step
     def click_next_image_button_activities(self):
-        div = self.driver.find_element(*self.activitiesMain)
+        div = self.driver.find_element(By.XPATH, self.activitiesMain)
         button = div.find_element(By.CLASS_NAME, 'next-img-btn')
         try:
             button.click()
@@ -142,7 +142,7 @@ class City_Page(User_Profile_Page):
 
     @allure.step
     def click_prev_image_button_activities(self):
-        div = self.driver.find_element(*self.activitiesMain)
+        div = self.driver.find_element(By.XPATH, self.activitiesMain)
         button = div.find_element(By.CLASS_NAME, 'prev-img-btn')
         try:
             button.click()
@@ -151,15 +151,15 @@ class City_Page(User_Profile_Page):
 
     @allure.step
     def restaurant_images(self):
-        div = self.driver.find_element(*self.restaurantsMain)
+        div = self.driver.find_element(By.XPATH, self.restaurantsMain)
         images = div.find_elements(By.CLASS_NAME, 'slider-card')
 
     @allure.step
     def hotels_images(self):
-        div = self.driver.find_element(*self.hotelsMain)
+        div = self.driver.find_element(By.XPATH, self.hotelsMain)
         images = div.find_elements(By.CLASS_NAME, 'slider-card')
 
     @allure.step
     def activities_images(self):
-        div = self.driver.find_element(*self.activitiesMain)
+        div = self.driver.find_element(By.XPATH, self.activitiesMain)
         images = div.find_elements(By.CLASS_NAME, 'slider-card')

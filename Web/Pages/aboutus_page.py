@@ -1,5 +1,6 @@
 from selenium.webdriver.support import expected_conditions as EC
 import allure
+from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from Web.Locators.locators_about_us import Locators_AboutUs
@@ -24,14 +25,14 @@ class AboutUs_Page:
     @allure.step
     @allure.description('Validation - returns all the text in the page')
     def ui(self):
-        return self.driver.find_element(*self.UI).get_attribute('innerText')
+        return self.driver.find_element(By.XPATH, self.UI).get_attribute('innerText')
 
     @allure.step
     @allure.description('Using Iframe - clicking on google maps link')
     def google_maps(self):
-        iframe = self.driver.find_element(*self.MapIframe)
+        iframe = self.driver.find_element(By.CSS_SELECTOR, self.MapIframe)
         self.driver.switch_to.frame(iframe)
-        link = self.driver.find_element(*self.googleMapLink)
+        link = self.driver.find_element(By.CSS_SELECTOR, self.googleMapLink)
         link.click()
         Utils(self.driver).assertion(2, len(self.driver.window_handles))
         google_maps_page = self.driver.window_handles[1]

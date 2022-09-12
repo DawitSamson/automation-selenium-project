@@ -21,7 +21,7 @@ class Accessibility_Page:
     def click_accessibility_main_button(self):
         self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, self.mainButton)))
         self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, self.mainButton)))
-        self.driver.find_element(*self.mainButton).click()
+        self.driver.find_element(By.CSS_SELECTOR, self.mainButton).click()
         self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, self.validationForMainButton)))
 
     @allure.step

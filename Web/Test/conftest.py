@@ -1,5 +1,6 @@
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
 import os
@@ -22,7 +23,7 @@ class Web_Fixtures:
         if browser == 'chrome':
             print('\n----------------------')
             print('Initialing Chrome Driver')
-            self.driver = webdriver.Chrome(ChromeDriverManager().install())
+            self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
             print('----------------------')
             print('\n----------------------')
             print('Test is Started')

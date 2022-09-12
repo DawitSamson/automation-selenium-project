@@ -9,11 +9,8 @@ from Web.Utils.utils import Utils
 @pytest.mark.usefixtures('pre_condition')
 @pytest.mark.parametrize('city_name', ['London'])
 class Test_City(Web_Fixtures):
-
     def test_1(self):
         pass
 
     def test_12(self):
-        driver = self.driver
-        city = City_Page(driver)
-        city.restaurant_images()
+        pass

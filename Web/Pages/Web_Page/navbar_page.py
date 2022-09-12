@@ -19,7 +19,7 @@ class NavBar:
     @allure.step
     @allure.description('The search method that included valid and invalid search')
     def searching(self, city_name):
-        searching = self.driver.find_element(*self.searchField)
+        searching = self.driver.find_element(By.CLASS_NAME, self.searchField)
         searching.send_keys(city_name)
         Utils(self.driver).assertion(city_name, searching.get_attribute('value'))
         searching.send_keys(Keys.ENTER)
@@ -27,18 +27,18 @@ class NavBar:
     @allure.step
     @allure.description('Validation - message when search is correctly')
     def city_name_correctly(self):
-        return self.driver.find_element(*self.cityNameCorrectly).get_attribute('innerText')
+        return self.driver.find_element(By.XPATH, self.cityNameCorrectly).get_attribute('innerText')
 
     @allure.step
     @allure.description('Validation - message when search is incorrectly')
     def city_name_incorrectly(self):
-        return self.driver.find_element(*self.cityNameIncorrectly).get_attribute('innerText')
+        return self.driver.find_element(By.XPATH, self.cityNameIncorrectly).get_attribute('innerText')
 
     @allure.step
     @allure.description('Clicking on all the links in the navbar and return to the current page when user not connect')
     def click_navbar_links(self, page_name):
         driver = self.driver
-        nav_bar_links = self.driver.find_elements(*self.navBarLinks)
+        nav_bar_links = self.driver.find_elements(By.XPATH, self.navBarLinks)
         Utils(self.driver).assertion(4, len(nav_bar_links))
 
         for link in range(len(nav_bar_links)):
