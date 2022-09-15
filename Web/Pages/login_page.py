@@ -93,7 +93,8 @@ class Login_Page:
                     Utils(self.driver).assertion(f"'.' is used at a wrong position in '{msg}'.", self.js_email(),
                                                  "Please enter an email address.")
                 if len(passwords[password]) == 1:
-                    Utils(self.driver).assertion('עליך להאריך את הטקסט ל-4 תווים או יותר (כרגע יש תו אחד).',
+                    Utils(self.driver).assertion('Please lengthen this text to 4 characters or more '
+                                                 '(you are currently using 1 character).',
                                                  self.js_password(),
                                                  "Please use at least 4 characters "
                                                  "(you are currently using 1 characters).")

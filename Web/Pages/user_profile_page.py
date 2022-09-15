@@ -1,4 +1,5 @@
 import allure
+from selenium.common.exceptions import NoAlertPresentException
 from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
@@ -83,8 +84,12 @@ class User_Profile_Page:
         except ElementClickInterceptedException:
             self.driver.execute_script("document.getElementsByClassName('logout-btn')[0].click()")
         alert = self.driver.switch_to.alert
-        for i in range(2):
-            alert.accept()
+        try:
+            for i in range(2):
+                self.wait.until(EC.alert_is_present())
+                alert.accept()
+        except NoAlertPresentException:
+            pass
         self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, self.validationForLogOutButton)))
 
     @allure.step
