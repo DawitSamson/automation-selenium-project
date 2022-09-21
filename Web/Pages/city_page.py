@@ -1,3 +1,5 @@
+import time
+
 import allure
 from Web.Locators.locators_city import City_Locators
 from Web.Pages.user_profile_page import User_Profile_Page
@@ -5,7 +7,6 @@ from Web.Utils.utils import Utils
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import ElementClickInterceptedException
-
 
 class City_Page(User_Profile_Page):
     def __init__(self, driver):
@@ -16,10 +17,12 @@ class City_Page(User_Profile_Page):
         self.restaurantsNavBar = City_Locators.RESTAURANTS_NAV_BAR
         self.activitiesNavBar = City_Locators.ACTIVITIES_NAV_BAR
         self.validationForRestNavBar = City_Locators.CATEGORY_NAME
-
         self.restaurantsMain = City_Locators.RESTAURANTS_MAIN_DIV
         self.hotelsMain = City_Locators.HOTELS_MAIN_DIV
         self.activitiesMain = City_Locators.ACTIVITIES_MAIN_DIV
+        self.restaurantsImages = City_Locators.RESTAURANTS_IMAGES
+        self.hotelsImages = City_Locators.HOTELS_IMAGES
+        self.activitiesImages = City_Locators.ACTIVITIES_IMAGES
 
     @allure.step
     def city_name(self):
@@ -151,15 +154,54 @@ class City_Page(User_Profile_Page):
 
     @allure.step
     def restaurant_images(self):
-        div = self.driver.find_element(By.XPATH, self.restaurantsMain)
-        images = div.find_elements(By.CLASS_NAME, 'slider-card')
+        restaurants_name = ["Scarlett Green", "Angus Steakhouse Oxford Circus", "Bayleaf Restaurant",
+                            "Launceston Place", "TOKii", "Osteria Romana"]
+        for i in range(1, len(restaurants_name)+1):
+            self.wait.until(EC.presence_of_element_located((By.XPATH, self.restaurantsImages+f"/a[{i}]")))
+            if i == 5 or i == 6:
+                for t in range(2):
+                    self.click_next_image_button_restaurants()
+            self.wait.until(EC.visibility_of_element_located((By.XPATH, self.restaurantsImages+f"/a[{i}]")))
+            self.wait.until(EC.element_to_be_clickable((By.XPATH, self.restaurantsImages+f"/a[{i}]")))
+            try:
+                self.driver.find_element(By.XPATH, self.restaurantsImages+f"/a[{i}]").click()
+            except ElementClickInterceptedException:
+                self.driver.execute_script(f'document.getElementsByClassName("slider-card")[{i-1}].click()')
+            self.driver.back()
+            yield self.driver.find_element(By.XPATH, self.restaurantsImages+f"/a[{i}]").get_attribute('text')
 
     @allure.step
     def hotels_images(self):
-        div = self.driver.find_element(By.XPATH, self.hotelsMain)
-        images = div.find_elements(By.CLASS_NAME, 'slider-card')
+        hotels_name = ["One Hundred Shoreditch", "Sanderson London Hotel", "Hilton London Kensington",
+                       "The Tower Hotel", "The Resident Covent Garden", "Park Grand London Kensington"]
+        for i in range(1, len(hotels_name)+1):
+            self.wait.until(EC.presence_of_element_located((By.XPATH, self.hotelsImages+f"/a[{i}]")))
+            if i == 5 or i == 6:
+                for t in range(2):
+                    self.click_next_image_button_hotels()
+            self.wait.until(EC.visibility_of_element_located((By.XPATH, self.hotelsImages+f"/a[{i}]")))
+            self.wait.until(EC.element_to_be_clickable((By.XPATH, self.hotelsImages+f"/a[{i}]")))
+            try:
+                self.driver.find_element(By.XPATH, self.hotelsImages+f"/a[{i}]").click()
+            except ElementClickInterceptedException:
+                self.driver.execute_script(f'document.getElementsByClassName("slider-card")[{6+i-1}].click()')
+            self.driver.back()
+            yield self.driver.find_element(By.XPATH, self.hotelsImages+f"/a[{i}]").get_attribute('innerText')
 
     @allure.step
     def activities_images(self):
-        div = self.driver.find_element(By.XPATH, self.activitiesMain)
-        images = div.find_elements(By.CLASS_NAME, 'slider-card')
+        activities_name = ["London Eye", "The London Dungeon", "Tower of London",
+                           "SEA LIFE London Aquarium", "Sky Garden", "Museum of London"]
+        for i in range(1, len(activities_name)+1):
+            self.wait.until(EC.presence_of_element_located((By.XPATH, self.activitiesImages+f"/a[{i}]")))
+            if i == 5 or i == 6:
+                for t in range(2):
+                    self.click_next_image_button_activities()
+            self.wait.until(EC.visibility_of_element_located((By.XPATH, self.activitiesImages+f"/a[{i}]")))
+            self.wait.until(EC.element_to_be_clickable((By.XPATH, self.activitiesImages+f"/a[{i}]")))
+            try:
+                self.driver.find_element(By.XPATH, self.activitiesImages+f"/a[{i}]").click()
+            except ElementClickInterceptedException:
+                self.driver.execute_script(f'document.getElementsByClassName("slider-card")[{12+i-1}].click()')
+            self.driver.back()
+            yield self.driver.find_element(By.XPATH, self.activitiesImages+f"/a[{i}]").get_attribute('text')

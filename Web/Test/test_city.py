@@ -126,3 +126,33 @@ class Test_City(Web_Fixtures):
         city = City_Page(driver)
         city.view_all_activities()
         Utils(driver).assertion("Activities", city.category_name())
+
+    @allure.description('User navigate to the restaurants pages on the slider')
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_click_on_restaurants_images(self):
+        driver = self.driver
+        city = City_Page(driver)
+        restaurants_name = ["Scarlett Green", "Angus Steakhouse Oxford Circus", "Bayleaf Restaurant",
+                            "Launceston Place", "TOKii", "Osteria Romana"]
+        city.restaurant_images()
+        Utils(driver).assertion(restaurants_name, list(city.restaurant_images()))
+
+    @allure.description('User navigate to the hotels pages on the slider')
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_click_on_hotels_images(self):
+        driver = self.driver
+        city = City_Page(driver)
+        hotels_name = ["One Hundred Shoreditch", "Sanderson London Hotel", "Hilton London Kensington",
+                       "The Tower Hotel", "The Resident Covent Garden", "Park Grand London Kensington"]
+        city.hotels_images()
+        Utils(driver).assertion(hotels_name, list(city.hotels_images()))
+
+    @allure.description('User navigate to the activities pages on the slider')
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_click_on_activities_images(self):
+        driver = self.driver
+        city = City_Page(driver)
+        activities_name = ["London Eye", "The London Dungeon", "Tower of London",
+                           "SEA LIFE London Aquarium", "Sky Garden", "Museum of London"]
+        city.activities_images()
+        Utils(driver).assertion(activities_name, list(city.activities_images()))

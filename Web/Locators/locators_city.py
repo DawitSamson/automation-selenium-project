@@ -9,6 +9,10 @@ class City_Locators:
     HOTELS_MAIN_DIV = '//section[1]/div[2]'
     ACTIVITIES_MAIN_DIV = '//section[1]/div[3]'
 
+    RESTAURANTS_IMAGES = RESTAURANTS_MAIN_DIV+"/div/div"
+    HOTELS_IMAGES = HOTELS_MAIN_DIV+"/div/div"
+    ACTIVITIES_IMAGES = ACTIVITIES_MAIN_DIV+"/div/div"
+
     """ Validations: """
     CITY_NAME_H1 = 'h1[class="city-name-h1"]'
     CATEGORY_NAME = 'h1[class="category-name-h1"]'
