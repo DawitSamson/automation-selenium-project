@@ -6,11 +6,12 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 from Web.Locators.Web_Locators.locators_navbar import NavBar_Locators
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-
+from selenium.webdriver.support.wait import WebDriverWait
 
 class NavBar:
     def __init__(self, driver: WebDriver):
         self.driver = driver
+        self.wait = WebDriverWait(self.driver, 20)
         self.searchField = NavBar_Locators.SEARCH_FIELD
         self.cityNameCorrectly = NavBar_Locators.CITY_NAME
         self.cityNameIncorrectly = NavBar_Locators.CITY_ERROR_MESSAGE
